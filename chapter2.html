@@ -1,9 +1,10 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chapter 1 — ಸತ್ಯವಂತ ಬಾಲಕ</title>
+<title>Chapter 2 — ಮಂಗಗಳ ಉಪವಾಸ</title>
 <link rel="stylesheet" href="shared.css">
 </head>
 <body>
@@ -20,10 +21,10 @@
 </div>
 
 <header class="app-header">
-  <div class="hdr-mascot">🦚</div>
+  <div class="hdr-mascot">🐒</div>
   <div class="hdr-text">
     <div class="hdr-title">ಕನ್ನಡ Study Buddy</div>
-    <div class="hdr-sub">Class 2 · Chapter 1 · Sarvam Voice · <strong style="color:var(--sun)">v6.1</strong></div>
+    <div class="hdr-sub">Class 2 · Chapter 2 · Sarvam Voice · <strong style="color:var(--sun)">v6.1</strong></div>
   </div>
   <div class="hdr-right">
     <a class="back-btn" href="index.html">← All Chapters</a>
@@ -34,6 +35,7 @@
 </header>
 
 <!-- Settings bar -->
+
 <div class="settings-bar">
   <span class="sbar-label">🎙 Voice:</span>
 
@@ -65,7 +67,8 @@
     <button class="clear-btn" onclick="clearCache()" title="Delete all saved audio from this device">🗑 Clear saved audio</button>
   </div>
 
-  <button class="stop-btn" onclick="stopAudio()">⏹ Stop</button>
+<button class="stop-btn" onclick="stopAudio()">⏹ Stop</button>
+
 </div>
 
 <div class="container">
@@ -73,113 +76,159 @@
 </div>
 
 <script src="shared.js"></script>
+
 <script>
-/* ── Chapter data ──────────────────────────────────────── */
+/* ── Chapter 2 data — scanned from notebook ─────────────
+   Source: IMG_7968.jpeg (front) + IMG_7969.jpeg (back)
+   Chapter title: ಮಂಗಗಳ ಉಪವಾಸ  (The Monkeys' Fast)
+─────────────────────────────────────────────────────── */
 const CHAPTER = {
-  id: 'ch1',
-  number: 'Chapter 1',
-  emoji: '📖',
-  titleKannada: 'ಸತ್ಯವಂತ ಬಾಲಕ',
-  titleTranslit: 'Satyavanta Bālaka',
-  titleEnglish: 'The Truthful Boy',
+  id: 'ch2',
+  number: 'Chapter 2',
+  emoji: '🐒',
+  titleKannada: 'ಮಂಗಗಳ ಉಪವಾಸ',
+  titleTranslit: 'Mangagaḷa Upavāsa',
+  titleEnglish: "The Monkeys' Fast",
   sections: [
 
-    /* I. Word Meanings */
+    /* ── I. ಪದಗಳ ಅರ್ಥ  (Word Meanings) ── */
     {
       type:'vocab', iconClass:'ic-vocab', icon:'📝',
       titleKn:'ಪದಗಳ ಅರ್ಥ', titleEn:'Word Meanings',
       items:[
-        { kn:'ಸುಳಿವು – ಗುರುತು',               tr:'Suḷivu – Gurutu',           en:'Hint / Identity' },
-        { kn:'ಸದ್ದು – ಶಬ್ದ',                   tr:'Saddu – Śabda',              en:'Sound' },
-        { kn:'ಪರಿಶೀಲಿಸು – ಪರೀಕ್ಷಿಸು',          tr:'Pariśīlisu – Parīkṣisu',    en:'Examine / Check' },
-        { kn:'ಆಶ್ಚರ್ಯ – ಅಚ್ಚರಿ',               tr:'Āścarya – Accari',          en:'Surprise / Wonder' },
-        { kn:'ಮೌನ – ಮಾತನಾಡದೆ ಇರುವುದು',         tr:'Mauna – Māṭanāḍade iruvudu', en:'Silence / Not speaking' },
+        {
+          kn:'ಪಕ್ಕ – ಹತ್ತಿರ',
+          // pakka = close / beside; hattira = near
+          tr:'Pakka – Hattira',
+          en:'Beside / Near'
+        },
+        {
+          kn:'ಉಪವಾಸ – ಏನನ್ನೂ ತಿನ್ನದೆ ಇರುವುದು',
+          // upavāsa = fasting; ēnannu tinnade iruvudu = not eating anything
+          tr:'Upavāsa – Ēnannu tinnade iruvudu',
+          en:'Fasting / Not eating anything'
+        },
+        {
+          kn:'ಚಿಗ – ಉಗಿಯುವುದು',
+          // chiga = to chew and spit; ugiyuvudu = to spit out
+          tr:'Chiga – Ugiyuvudu',
+          en:'To Chew / Spit out'
+        },
+        {
+          kn:'ನೂಲು – ಸಿಪ್ಪೆ ಬಿಡಿಸುವುದು',
+          // nūlu = to peel; sippe biḍisuvudu = to remove the skin/peel
+          tr:'Nūlu – Sippe biḍisuvudu',
+          en:'To Peel (remove skin)'
+        },
+        {
+          kn:'ಕಪಿ – ಮಂಗ, ಕೋತಿ',
+          // kapi = monkey; manga, kōti = monkey (synonyms)
+          tr:'Kapi – Manga, Kōti',
+          en:'Monkey'
+        },
       ]
     },
 
-    /* II. One Sentence Answers */
+    /* ── II. ಒಂದು ವಾಕ್ಯದಲ್ಲಿ ಉತ್ತರಿಸಿ ── */
     {
       type:'qa', iconClass:'ic-short', icon:'🗒️',
       titleKn:'ಒಂದು ವಾಕ್ಯದಲ್ಲಿ ಉತ್ತರಿಸಿ', titleEn:'Answer in One Sentence',
       items:[
         {
-          qKn:'ಗುರುಗಳು ಎಲ್ಲಿಗೆ ಬಂದರು?',
-          qTr:'Gurugaḷu ellige bandaru?', qEn:'Where did the teacher come?',
-          aKn:'ಗುರುಗಳು ತರಗತಿಗೆ ಬಂದರು.',
-          aTr:'Gurugaḷu taragatige bandaru.', aEn:'The teacher came to the class.'
+          qKn:'ಮಂಗಗಳು ಎಲ್ಲಿ ವಾಸಿಸುತ್ತಿದ್ದವು?',
+          // mangagaḷu = monkeys; elli = where; vāsisuttiddavu = were living
+          qTr:'Mangagaḷu elli vāsisuttiddavu?',
+          qEn:'Where were the monkeys living?',
+          aKn:'ಮಂಗಗಳು ಕಾಡಿನಲ್ಲಿ ವಾಸಿಸುತ್ತಿದ್ದವು.',
+          aTr:'Mangagaḷu kāḍinalli vāsisuttiddavu.',
+          aEn:'The monkeys were living in the forest.'
         },
         {
-          qKn:'ಹುಡುಗನಿಗೆ ಯಾವ ಸಾಲಿನಲ್ಲಿ ಕುಳಿತುಕೊಳ್ಳಲು ಹೇಳಿದರು?',
-          qTr:'Huḍuganige yāva sālinalli kuḷithukoḷḷalu hēḷidaru?',
-          qEn:'Which row was the boy told to sit in?',
-          aKn:'ಹುಡುಗನಿಗೆ ಮೊದಲನೇ ಸಾಲಿನಲ್ಲಿ ಕುಳಿತುಕೊಳ್ಳಲು ಹೇಳಿದರು.',
-          aTr:'Huḍuganige modalanē sālinalli kuḷithukoḷḷalu hēḷidaru.',
-          aEn:'The boy was told to sit in the first row.'
+          qKn:'ಮಂಗಗಳು ಯಾವ ತೋಟಕ್ಕೆ ಹೋದವು?',
+          // yāva = which; tōṭakke = to the garden; hōdavu = went
+          qTr:'Mangagaḷu yāva tōṭakke hōdavu?',
+          qEn:'Which garden did the monkeys go to?',
+          aKn:'ಮಂಗಗಳು ಬಾಳೆಯ ತೋಟಕ್ಕೆ ಹೋದವು.',
+          aTr:'Mangagaḷu bāḷeya tōṭakke hōdavu.',
+          aEn:'The monkeys went to the banana garden.'
         },
         {
-          qKn:'ಬಾಲಕನಿಗೆ ಏನು ಹೇಳಲು ಮನಸ್ಸು ಬರಲಿಲ್ಲ?',
-          qTr:'Bālakanige ēnu hēḷalu manassu baralilla?',
-          qEn:'What did the boy not feel like saying?',
-          aKn:'ಬಾಲಕನಿಗೆ ಸುಳ್ಳು ಹೇಳಲು ಮನಸ್ಸು ಬರಲಿಲ್ಲ.',
-          aTr:'Bālakanige suḷḷu hēḷalu manassu baralilla.',
-          aEn:'The boy did not feel like telling a lie.'
-        },
-        {
-          qKn:'ಸತ್ಯವಂತ ಬಾಲಕನ ಹೆಸರೇನು?',
-          qTr:'Satyavanta bālakana hesarēnu?', qEn:"What is the truthful boy's name?",
-          aKn:'ಸತ್ಯವಂತ ಬಾಲಕನ ಹೆಸರು ಗೋಪಾಲಕೃಷ್ಣ.',
-          aTr:'Satyavanta bālakana hesaru Gōpālakṛṣṇa.',
-          aEn:"The truthful boy's name is Gopalakrishna."
+          qKn:'ಮಂಗಗಳು ಹಣ್ಣನ್ನು ಎಲ್ಲಿ ಇಟ್ಟುಕೊಂಡವು?',
+          // haṇṇannu = the fruit; elli = where; iṭṭukoṇḍavu = kept/put
+          qTr:'Mangagaḷu haṇṇannu elli iṭṭukoṇḍavu?',
+          qEn:'Where did the monkeys keep the fruit?',
+          aKn:'ಮಂಗಗಳು ಹಣ್ಣನ್ನು ಬಾಯಲ್ಲಿ ಇಟ್ಟುಕೊಂಡವು.',
+          aTr:'Mangagaḷu haṇṇannu bāyalli iṭṭukoṇḍavu.',
+          aEn:'The monkeys kept the fruit in their mouths.'
         },
       ]
     },
 
-    /* III. Detailed Answers */
-    {
-      type:'qa', iconClass:'ic-detail', icon:'📜',
-      titleKn:'ವಿವರವಾಗಿ ಉತ್ತರಿಸಿ', titleEn:'Answer in Detail',
-      items:[
-        {
-          qKn:'ಒಬ್ಬ ಬಾಲಕ ಎದ್ದು ನಿಂತು ಗುರುಗಳಿಗೆ ಏನೆಂದು ಹೇಳಿದನು?',
-          qTr:'Obba bālaka eddu nintu gurugaḷige ēnendu hēḷidanu?',
-          qEn:'What did one boy stand up and say to the teacher?',
-          aKn:'ಒಬ್ಬ ಬಾಲಕ ಎದ್ದು ನಿಂತು ಗುರುಗಳಿಗೆ ನಾನು ಲೆಕ್ಕಗಳನ್ನು ಮಾಡಿ ತಂದಿದ್ದೇನೆ ಎಂದು ಹೇಳಿದನು.',
-          aTr:'Obba bālaka eddu nintu gurugaḷige nānu lekkagaḷannu māḍi tandiddēne endu hēḷidanu.',
-          aEn:'One boy stood up and told the teacher, I have done the sums and brought them.'
-        },
-        {
-          qKn:'ಗುರುಗಳಿಗೆ ಅಚ್ಚರಿ ಮತ್ತು ಆನಂದ ಏಕಾಯಿತು?',
-          qTr:'Gurugaḷige accari mattu ānanda ēkāyitu?',
-          qEn:'Why was the teacher surprised and happy?',
-          aKn:'ಗುರುಗಳಿಗೆ ಬಾಲಕನ ಪ್ರಾಮಾಣಿಕತೆ ಕಂಡು ಅಚ್ಚರಿ ಮತ್ತು ಆನಂದ ವಾಯಿತು.',
-          aTr:'Gurugaḷige bālakana prāmāṇikate kaṇḍu accari mattu ānanda vāyitu.',
-          aEn:"The teacher was surprised and happy on seeing the boy's honesty."
-        },
-      ]
-    },
-
-    /* IV. Fill in Blanks */
+    /* ── III. ಬಿಟ್ಟ ಸ್ಥಳ ತುಂಬಿರಿ (Fill in the Blanks) ── */
     {
       type:'fill', iconClass:'ic-fill', icon:'✏️',
       titleKn:'ಬಿಟ್ಟ ಸ್ಥಳ ತುಂಬಿರಿ', titleEn:'Fill in the Blanks',
       items:[
-        { sentenceKn:'ಭೀಷ್ಮ ನೀನು <u>ಜಾಣ</u>.', speakKn:'ಭೀಷ್ಮ ನೀನು ಜಾಣ.', tr:'Bhīṣma nīnu jāṇa.', en:'Bhishma, you are smart.' },
-        { sentenceKn:'ಅವನು ಒಂದು <u>ಹೆಜ್ಜೆ</u>ಯನ್ನು ಮುಂದೆ ಇಡಲಿಲ್ಲ.', speakKn:'ಅವನು ಒಂದು ಹೆಜ್ಜೆಯನ್ನು ಮುಂದೆ ಇಡಲಿಲ್ಲ.', tr:'Avanu ondu hejjeyannu munde iḍalilla.', en:'He did not take a single step forward.' },
-        { sentenceKn:'ಇವರು ಮಹಿಳೆಯರಿಗೂ <u>ಶಿಕ್ಷಣ</u> ಬೇಕೆಂದು ಹೇಳಿದನು.', speakKn:'ಇವರು ಮಹಿಳೆಯರಿಗೂ ಶಿಕ್ಷಣ ಬೇಕೆಂದು ಹೇಳಿದನು.', tr:'Ivaru mahiḷeyarigū śikṣaṇa bēkendu hēḷidanu.', en:'He said that women too need education.' },
+        {
+          sentenceKn:'ಮಂಗಗಳು ಒಟ್ಟಿಗೆ ಸೇರಿ <u>ಉಪವಾಸ</u> ಮಾಡಿದವು.',
+          speakKn:   'ಮಂಗಗಳು ಒಟ್ಟಿಗೆ ಸೇರಿ ಉಪವಾಸ ಮಾಡಿದವು.',
+          // mangagaḷu oṭṭige sēri = monkeys gathered together; upavāsa māḍidavu = observed a fast
+          tr: 'Mangagaḷu oṭṭige sēri upavāsa māḍidavu.',
+          en: 'The monkeys gathered together and observed a fast.'
+        },
+        {
+          sentenceKn:'ಏನನ್ನೂ ತಿನ್ನದೆ ಮಟ ಮಟ <u>ಮಧ್ಯಾಹ್ನ</u> ಸೋಡ್ತ ಇದ್ದರು ಮರದಲ್ಲಿ.',
+          speakKn:   'ಏನನ್ನೂ ತಿನ್ನದೆ ಮಟ ಮಟ ಮಧ್ಯಾಹ್ನ ಸೋಡ್ತ ಇದ್ದರು ಮರದಲ್ಲಿ.',
+          // ēnannu tinnade = without eating anything; maṭa maṭa madhyāhna = blazing noon; mara = tree
+          tr: 'Ēnannu tinnade maṭa maṭa madhyāhna sōḍta iddaru maradalli.',
+          en: 'Without eating anything they spent the blazing afternoon up in the tree.'
+        },
+        {
+          sentenceKn:'ಕ್ರಿಯಾಲೋತಕ ಬಾಯಲ್ಲಿ ಇಟ್ಟ <u>ಹಣ್ಣನ್ನು</u> ಇಳಿಸಿಕೊಂಡರು.',
+          speakKn:   'ಕ್ರಿಯಾಲೋತಕ ಬಾಯಲ್ಲಿ ಇಟ್ಟ ಹಣ್ಣನ್ನು ಇಳಿಸಿಕೊಂಡರು.',
+          // kriyālōtaka = finally / in the end; bāyalli iṭṭa = kept in mouth; haṇṇannu iḷisikoṇḍaru = swallowed the fruit
+          tr: 'Kriyālōtaka bāyalli iṭṭa haṇṇannu iḷisikoṇḍaru.',
+          en: 'Finally, they swallowed the fruit they had kept in their mouths.'
+        },
       ]
     },
 
-    /* V. Form the Word */
+    /* ── IV. ಪದಗಳ ಅರ್ಥ ತುಂಬಿರಿ (Match/Fill Word Meanings) ── */
     {
       type:'wordform', iconClass:'ic-form', icon:'🔤',
-      titleKn:'ಆವರಣದಲ್ಲಿರುವ ಅಕ್ಷರ ಬಳಸಿ ಸೂಕ್ತ ಪದ ರಚಿಸಿ', titleEn:'Form the Correct Word',
+      titleKn:'ಸರಿಯಾದ ಪದ ರಚಿಸಿ', titleEn:'Form the Correct Word',
       items:[
-        { displayKn:'ಅ<hl>ಭಿ</hl>ಮಾನ',         speakKn:'ಅಭಿಮಾನ',       tr:'Abhimāna',    en:'Pride / Affection' },
-        { displayKn:'<hl>ಪ್ರಾ</hl>ಮಾಣಿಕತೆ',     speakKn:'ಪ್ರಾಮಾಣಿಕತೆ', tr:'Prāmāṇikate', en:'Honesty' },
-        { displayKn:'ಹರ<hl>ಸು</hl>',            speakKn:'ಹರಸು',         tr:'Harasu',      en:'To Bless' },
-        { displayKn:'ಸತ್ಯ<hl>ವಂ</hl>ತ',         speakKn:'ಸತ್ಯವಂತ',     tr:'Satyavanta',  en:'Truthful' },
+        {
+          displayKn:'<hl>ಉಪ</hl>ವಾಸ',
+          speakKn:  'ಉಪವಾಸ',
+          // upavāsa = fasting — the key syllable being practised is ಉಪ
+          tr: 'Upavāsa',
+          en: 'Fasting'
+        },
+        {
+          displayKn:'ನಾಲ್ಗೆ <hl>ತಾರ</hl>ಡಿ',
+          speakKn:  'ನಾಲ್ಗೆ ತಾರಡಿ',
+          // nālge tāraḍi = tongue twisting / temptation — from notebook entry ②
+          tr: 'Nālge tāraḍi',
+          en: 'Tongue is tempted (craving)'
+        },
+        {
+          displayKn:'ಅನೆಯ <hl>ರಟ್ಟ</hl>ಕ',
+          speakKn:  'ಅನೆಯ ರಟ್ಟಕ',
+          // aneyarattaka — from notebook entry ③ meaning "stubborn / firm"
+          tr: 'Aneyarattaka',
+          en: 'Stubborn / Firm'
+        },
+        {
+          displayKn:'ಹಣ್ಣನ್ನು <hl>ಫಲ</hl>ದವ',
+          speakKn:  'ಹಣ್ಣನ್ನು ಫಲದವ',
+          // haṇṇannu phaladava = one who gives fruit — from notebook entry ④
+          tr: 'Haṇṇannu phaladava',
+          en: 'One who gives fruit'
+        },
       ]
     },
+
   ]
 };
 
@@ -189,14 +238,13 @@ function speakHeroTitle() {
     window.innerWidth/2, window.innerHeight/2);
 }
 
-/* ── Render ────────────────────────────────────────────── */
+/* ── Render (identical pattern to chapter1.html) ─────── */
 const REFS = {};
 let   refN = 0;
 const mkRef = t => { const id='r'+(refN++); REFS[id]=t; return id; };
 
 function renderChapter() {
   const ch    = CHAPTER;
-  const total = ch.sections.reduce((s,sec) => s+sec.items.length, 0);
   document.getElementById('chapterContent').innerHTML =
     `<div class="ch-hero">
        <div class="ch-hero-emoji">${ch.emoji}</div>
@@ -291,10 +339,9 @@ function go(r, evt) {
   }
 }
 
-// Floating stars
 (function(){
   const bg=document.getElementById('starsBg');
-  const emojis=['⭐','🌟','✨','💫','🌸','🎯'];
+  const emojis=['⭐','🌟','✨','💫','🐒','🍌','🎯'];
   for(let i=0;i<15;i++){
     const s=document.createElement('div'); s.className='star-float';
     s.textContent=emojis[Math.floor(Math.random()*emojis.length)];
@@ -311,5 +358,6 @@ bootShared(() => {
   renderChapter();
 });
 </script>
+
 </body>
 </html>
