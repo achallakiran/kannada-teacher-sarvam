@@ -1,0 +1,1386 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+  ╔══════════════════════════════════════════════════════════╗
+  ║  ಕನ್ನಡ Study Buddy  —  Class 2  —  v5.0               ║
+  ║  Kids-friendly redesign with Sarvam TTS                  ║
+  ║  Proxy: sarvam-kn-proxy.achallakiran.workers.dev         ║
+  ║                                                          ║
+  ║  TO ADD CHAPTERS: find  ══ ADD CHAPTERS BELOW            ║
+  ╚══════════════════════════════════════════════════════════╝
+-->
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ಕನ್ನಡ Study Buddy 🌟 Class 2 · v5</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Kannada:wght@400;600;700&family=Baloo+2:wght@400;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════
+   TOKENS — bright, warm, joyful palette
+══════════════════════════════════════ */
+:root {
+  --sky:       #4FC3F7;
+  --sun:       #FFD600;
+  --grass:     #66BB6A;
+  --coral:     #FF7043;
+  --lavender:  #BA68C8;
+  --mint:      #26C6DA;
+  --peach:     #FFAB76;
+  --cream:     #FFFDE7;
+  --white:     #FFFFFF;
+  --ink:       #1A237E;
+  --ink-soft:  #37474F;
+  --shadow:    rgba(26,35,126,0.12);
+  --radius-xl: 24px;
+  --radius-lg: 18px;
+  --radius-md: 12px;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ══════════════════════════════════════
+   ANIMATED SKY BACKGROUND
+══════════════════════════════════════ */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 10%, rgba(79,195,247,.18) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 90%, rgba(102,187,106,.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(255,214,0,.07) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* floating stars background */
+.stars-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+.star-float {
+  position: absolute;
+  font-size: 1.2rem;
+  opacity: 0.12;
+  animation: floatStar linear infinite;
+}
+@keyframes floatStar {
+  from { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+  10%  { opacity: 0.12; }
+  90%  { opacity: 0.12; }
+  to   { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+}
+
+/* ══════════════════════════════════════
+   HEADER
+══════════════════════════════════════ */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: linear-gradient(135deg, #1A237E 0%, #283593 50%, #3949AB 100%);
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 4px 20px rgba(26,35,126,.35);
+}
+.hdr-mascot {
+  font-size: 2.4rem;
+  animation: bounce 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+@keyframes bounce {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-5px); }
+}
+.hdr-text { flex: 1; min-width: 0; }
+.hdr-title {
+  font-family: 'Baloo 2', cursive;
+  font-size: clamp(1rem, 3vw, 1.4rem);
+  font-weight: 800;
+  color: var(--sun);
+  line-height: 1.1;
+  text-shadow: 0 2px 8px rgba(0,0,0,.3);
+}
+.hdr-sub {
+  font-size: .72rem;
+  color: rgba(255,255,255,.65);
+  font-weight: 600;
+  letter-spacing: .06em;
+  margin-top: 1px;
+}
+.hdr-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.version-badge {
+  background: rgba(255,214,0,.2);
+  border: 1.5px solid rgba(255,214,0,.4);
+  border-radius: 20px;
+  padding: 3px 10px;
+  font-size: .68rem;
+  font-weight: 800;
+  color: var(--sun);
+  letter-spacing: .05em;
+}
+
+/* ══════════════════════════════════════
+   STARS COUNTER  (reward system)
+══════════════════════════════════════ */
+.star-counter {
+  background: linear-gradient(135deg, #FF6F00, #FF8F00);
+  border-radius: 20px;
+  padding: 4px 12px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: .82rem;
+  font-weight: 800;
+  color: white;
+  box-shadow: 0 2px 8px rgba(255,111,0,.4);
+  cursor: pointer;
+  transition: transform .2s;
+}
+.star-counter:hover { transform: scale(1.05); }
+.star-counter .star { font-size: 1rem; }
+
+/* ══════════════════════════════════════
+   SETTINGS BAR
+══════════════════════════════════════ */
+.settings-bar {
+  background: white;
+  border-bottom: 2px solid rgba(79,195,247,.2);
+  padding: 8px 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  box-shadow: 0 2px 10px var(--shadow);
+  position: relative;
+  z-index: 10;
+}
+.sbar-label {
+  font-size: .7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+.sbar-group { display: flex; align-items: center; gap: 6px; }
+.sbar-group label { font-size: .72rem; font-weight: 700; color: var(--ink-soft); white-space: nowrap; }
+.sbar-select {
+  font-family: 'Nunito', sans-serif;
+  font-size: .76rem;
+  font-weight: 700;
+  border: 2px solid rgba(79,195,247,.4);
+  border-radius: 10px;
+  padding: 4px 8px;
+  color: var(--ink);
+  background: #F0F9FF;
+  outline: none;
+  cursor: pointer;
+  transition: border-color .2s;
+}
+.sbar-select:focus { border-color: var(--sky); }
+
+/* model cost badge */
+.cost-badge {
+  font-size: .65rem;
+  font-weight: 800;
+  border-radius: 8px;
+  padding: 2px 7px;
+  white-space: nowrap;
+}
+.cost-v3 { background: #E8F5E9; color: #2E7D32; border: 1px solid #A5D6A7; }
+.cost-v2 { background: #FFF8E1; color: #F57F17; border: 1px solid #FFE082; }
+
+.sbar-range { width: 72px; accent-color: var(--sky); }
+.sbar-val   { font-size: .72rem; font-weight: 800; color: var(--sky); min-width: 28px; }
+.stop-btn {
+  background: linear-gradient(135deg, #EF5350, #E53935);
+  border: none; border-radius: 10px;
+  padding: 5px 12px; font-size: .74rem; font-weight: 800;
+  color: white; cursor: pointer; font-family: 'Nunito', sans-serif;
+  box-shadow: 0 2px 8px rgba(239,83,80,.35);
+  transition: all .2s; white-space: nowrap;
+}
+.stop-btn:hover { transform: scale(1.05); }
+#cacheInfo { font-size: .68rem; color: #9E9E9E; font-weight: 700; }
+.clear-btn  { font-size: .68rem; color: var(--coral); background: none; border: none; cursor: pointer; font-weight: 800; }
+
+/* ══════════════════════════════════════
+   CONTAINER
+══════════════════════════════════════ */
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 24px 16px 80px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ══════════════════════════════════════
+   CHAPTER TABS  — big colourful pills
+══════════════════════════════════════ */
+.chapter-nav {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+  align-items: center;
+}
+.ch-nav-label {
+  font-size: .7rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: .1em; color: var(--ink-soft); margin-right: 2px;
+}
+.ch-tab {
+  background: white;
+  border: 3px solid #E3E8FF;
+  border-radius: 50px;
+  padding: 8px 20px;
+  font-size: .84rem;
+  font-weight: 800;
+  color: var(--ink);
+  cursor: pointer;
+  font-family: 'Baloo 2', cursive;
+  transition: all .2s;
+  box-shadow: 0 3px 10px var(--shadow);
+}
+.ch-tab:hover { border-color: var(--sky); color: #1565C0; transform: translateY(-2px); }
+.ch-tab.active {
+  background: linear-gradient(135deg, #1565C0, #1A237E);
+  border-color: #1A237E;
+  color: white;
+  box-shadow: 0 5px 18px rgba(26,35,126,.35);
+  transform: translateY(-2px);
+}
+.add-ch-btn {
+  background: white; border: 3px dashed #C5CAE9; border-radius: 50px;
+  padding: 8px 16px; font-size: .8rem; font-weight: 800; color: #9FA8DA;
+  cursor: pointer; font-family: 'Nunito', sans-serif; transition: all .2s;
+}
+.add-ch-btn:hover { border-color: var(--sky); color: var(--sky); }
+
+/* ══════════════════════════════════════
+   CHAPTER HERO CARD
+══════════════════════════════════════ */
+.ch-hero {
+  background: linear-gradient(135deg, #1565C0 0%, #1A237E 60%, #0D1757 100%);
+  border-radius: var(--radius-xl);
+  padding: 28px 32px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(26,35,126,.3);
+}
+.ch-hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='40' cy='40' r='35' fill='none' stroke='rgba(255,255,255,0.04)' stroke-width='2'/%3E%3Ccircle cx='40' cy='40' r='20' fill='none' stroke='rgba(255,255,255,0.04)' stroke-width='2'/%3E%3C/svg%3E") repeat;
+  pointer-events: none;
+}
+.ch-hero-emoji {
+  font-size: 4.5rem;
+  position: absolute; right: 24px; bottom: 12px;
+  opacity: .15; pointer-events: none;
+  animation: heroFloat 3s ease-in-out infinite;
+}
+@keyframes heroFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+.ch-num  { font-size: .7rem; text-transform: uppercase; letter-spacing: .15em; color: rgba(255,214,0,.6); margin-bottom: 6px; font-weight: 800; }
+.ch-kn   { font-family: 'Noto Sans Kannada', sans-serif; font-size: clamp(1.4rem,4vw,2rem); font-weight: 700; color: var(--sun); line-height: 1.3; }
+.ch-en   { font-size: 1rem; color: rgba(255,255,255,.7); font-style: italic; margin-top: 4px; font-family: 'Nunito', sans-serif; }
+.ch-progress {
+  margin-top: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.ch-progress-bar {
+  flex: 1;
+  height: 8px;
+  background: rgba(255,255,255,.15);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.ch-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--sun), var(--peach));
+  border-radius: 8px;
+  transition: width .6s ease;
+}
+.ch-progress-label { font-size: .72rem; color: rgba(255,255,255,.6); font-weight: 700; white-space: nowrap; }
+
+/* ══════════════════════════════════════
+   SECTION CARDS
+══════════════════════════════════════ */
+.sec-card {
+  background: white;
+  border-radius: var(--radius-xl);
+  margin-bottom: 16px;
+  box-shadow: 0 4px 20px var(--shadow);
+  overflow: hidden;
+  animation: popIn .4s cubic-bezier(.34,1.56,.64,1) both;
+  border: 2px solid transparent;
+  transition: border-color .2s;
+}
+.sec-card:hover { border-color: rgba(79,195,247,.3); }
+@keyframes popIn {
+  from { opacity:0; transform:scale(.95) translateY(12px); }
+  to   { opacity:1; transform:scale(1)  translateY(0); }
+}
+.sec-hdr {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 15px 20px;
+  cursor: pointer;
+  user-select: none;
+  transition: background .18s;
+  border-bottom: 2px solid transparent;
+}
+.sec-hdr:hover   { background: #F8FBFF; }
+.sec-hdr.open    { border-bottom-color: #EEF5FF; }
+.sec-icon-wrap {
+  width: 44px; height: 44px;
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; flex-shrink: 0;
+  box-shadow: 0 3px 10px var(--shadow);
+}
+.ic-vocab  { background: linear-gradient(135deg, #FFD54F, #FF8F00); }
+.ic-short  { background: linear-gradient(135deg, #81C784, #2E7D32); }
+.ic-detail { background: linear-gradient(135deg, #64B5F6, #1565C0); }
+.ic-fill   { background: linear-gradient(135deg, #CE93D8, #7B1FA2); }
+.ic-form   { background: linear-gradient(135deg, #FF8A65, #BF360C); }
+
+.sec-titles   { flex: 1; }
+.sec-title-kn { font-family: 'Noto Sans Kannada', sans-serif; font-size: .95rem; font-weight: 700; color: var(--ink); }
+.sec-title-en { font-size: .72rem; color: #78909C; font-weight: 700; margin-top: 1px; }
+.sec-count    {
+  background: #EEF5FF; color: #1565C0;
+  border-radius: 12px; padding: 3px 10px;
+  font-size: .7rem; font-weight: 800;
+}
+.sec-chevron  { font-size: .8rem; color: #B0BEC5; transition: transform .3s ease; }
+.sec-hdr.open .sec-chevron { transform: rotate(180deg); }
+.sec-body     { display: none; padding: 16px 20px 20px; }
+.sec-body.open { display: block; }
+
+/* ══════════════════════════════════════
+   SPEAK BUTTON  — big, fun, tactile
+══════════════════════════════════════ */
+.speak-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: linear-gradient(135deg, #E3F2FD, #BBDEFB);
+  border: 2.5px solid rgba(21,101,192,.25);
+  border-radius: 50px;
+  padding: 5px 13px;
+  font-size: .74rem;
+  font-weight: 800;
+  color: #1565C0;
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  transition: all .18s;
+  white-space: nowrap;
+  flex-shrink: 0;
+  line-height: 1.4;
+  box-shadow: 0 2px 8px rgba(21,101,192,.15);
+}
+.speak-btn:hover {
+  background: linear-gradient(135deg, #BBDEFB, #90CAF9);
+  border-color: rgba(21,101,192,.5);
+  transform: scale(1.06);
+  box-shadow: 0 4px 14px rgba(21,101,192,.25);
+}
+.speak-btn:disabled { opacity: .45; cursor: not-allowed; transform: none; }
+
+.speak-btn.loading {
+  background: linear-gradient(135deg, #FFF8E1, #FFE082);
+  border-color: rgba(255,160,0,.4);
+  color: #E65100;
+  animation: loadpulse .8s ease-in-out infinite;
+}
+@keyframes loadpulse { 0%,100%{opacity:1} 50%{opacity:.55} }
+
+.speak-btn.playing {
+  background: linear-gradient(135deg, #E8F5E9, #A5D6A7);
+  border-color: rgba(46,125,50,.4);
+  color: #2E7D32;
+  animation: playglow 1s ease-in-out infinite;
+}
+@keyframes playglow {
+  0%,100%{ box-shadow:0 0 0 0 rgba(46,125,50,.4); }
+  50%    { box-shadow:0 0 0 6px rgba(46,125,50,0); }
+}
+.speak-btn.err {
+  background: linear-gradient(135deg, #FFEBEE, #FFCDD2);
+  border-color: rgba(198,40,40,.3);
+  color: #C62828;
+}
+
+/* card highlight when playing */
+.card-active {
+  outline: 3px solid var(--grass);
+  outline-offset: 2px;
+  border-radius: var(--radius-lg);
+}
+
+/* star burst on click */
+@keyframes starBurst {
+  0%   { transform: scale(0) rotate(-20deg); opacity: 1; }
+  60%  { transform: scale(1.4) rotate(10deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 0; }
+}
+.star-burst {
+  position: fixed;
+  font-size: 2rem;
+  pointer-events: none;
+  z-index: 9999;
+  animation: starBurst .7s ease forwards;
+}
+
+/* ══════════════════════════════════════
+   VOCAB CARDS
+══════════════════════════════════════ */
+.vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 12px; }
+.vocab-card {
+  background: linear-gradient(135deg, #FFFDE7, #FFF9C4);
+  border-radius: var(--radius-lg);
+  padding: 14px 16px;
+  border-left: 5px solid var(--sun);
+  transition: transform .18s, box-shadow .18s;
+  box-shadow: 0 3px 12px rgba(255,214,0,.15);
+}
+.vocab-card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,214,0,.25); }
+.vocab-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin-bottom: 8px; }
+.vocab-num { font-size: .62rem; color: #E65100; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; background: #FFF3E0; border-radius: 6px; padding: 1px 6px; }
+.vocab-kn  { font-family: 'Noto Sans Kannada', sans-serif; font-size: 1.05rem; font-weight: 700; color: var(--ink); margin-bottom: 3px; }
+.vocab-tr  { font-size: .76rem; color: #546E7A; font-style: italic; margin-bottom: 5px; }
+.vocab-en  { font-size: .8rem; font-weight: 800; color: #2E7D32; background: #E8F5E9; display: inline-block; padding: 2px 10px; border-radius: 20px; }
+
+/* ══════════════════════════════════════
+   Q & A
+══════════════════════════════════════ */
+.qa-item { border-radius: var(--radius-lg); margin-bottom: 14px; overflow: hidden; border: 2px solid #EEF5FF; }
+.qa-item:last-child { margin-bottom: 0; }
+.qa-q-block { background: linear-gradient(135deg, #E3F2FD, #EEF5FF); padding: 13px 16px; }
+.qa-q-top   { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 5px; }
+.qa-q-label { font-size: .62rem; text-transform: uppercase; letter-spacing: .1em; color: #1565C0; font-weight: 800; background: #BBDEFB; border-radius: 6px; padding: 1px 7px; }
+.qa-kn      { font-family: 'Noto Sans Kannada', sans-serif; font-size: .98rem; font-weight: 700; color: var(--ink); line-height: 1.5; }
+.qa-tr      { font-size: .74rem; color: #546E7A; font-style: italic; margin-top: 3px; }
+.qa-en      { font-size: .8rem; color: #1565C0; font-weight: 700; margin-top: 3px; }
+.qa-a-block { background: white; padding: 13px 16px; }
+.qa-a-top   { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 5px; }
+.qa-a-label { font-size: .62rem; text-transform: uppercase; letter-spacing: .1em; color: #2E7D32; font-weight: 800; background: #E8F5E9; border-radius: 6px; padding: 1px 7px; }
+.qa-ans-kn  { font-family: 'Noto Sans Kannada', sans-serif; font-size: .95rem; color: var(--ink); line-height: 1.5; font-weight: 600; }
+.qa-ans-tr  { font-size: .74rem; color: #546E7A; font-style: italic; margin-top: 3px; }
+.qa-ans-en  { font-size: .78rem; color: #388E3C; margin-top: 3px; font-weight: 700; }
+
+/* ══════════════════════════════════════
+   FILL IN BLANKS
+══════════════════════════════════════ */
+.fill-list { list-style: none; }
+.fill-item { display: flex; gap: 13px; align-items: flex-start; padding: 12px 0; border-bottom: 2px dashed #EEF5FF; }
+.fill-item:last-child { border-bottom: none; }
+.fill-num  {
+  background: linear-gradient(135deg, var(--lavender), #7B1FA2);
+  color: white; border-radius: 50%;
+  width: 28px; height: 28px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .78rem; font-weight: 800; flex-shrink: 0; margin-top: 2px;
+  box-shadow: 0 2px 8px rgba(123,31,162,.3);
+}
+.fill-body { flex: 1; }
+.fill-top  { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 3px; }
+.fill-kn   { font-family: 'Noto Sans Kannada', sans-serif; font-size: .98rem; font-weight: 700; color: var(--ink); }
+.fill-kn u { text-underline-offset: 4px; text-decoration-color: var(--lavender); color: #7B1FA2; text-decoration-thickness: 2px; }
+.fill-tr   { font-size: .74rem; color: #546E7A; font-style: italic; margin-top: 2px; }
+.fill-en   { font-size: .78rem; color: #6A1B9A; font-weight: 700; margin-top: 2px; }
+
+/* ══════════════════════════════════════
+   WORD FORM
+══════════════════════════════════════ */
+.wf-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 12px; }
+.wf-card {
+  background: linear-gradient(135deg, #FBE9E7, #FFCCBC);
+  border-radius: var(--radius-lg);
+  padding: 14px 15px;
+  text-align: center;
+  border: 2px solid rgba(255,112,67,.2);
+  transition: all .2s;
+  position: relative;
+  box-shadow: 0 3px 12px rgba(255,112,67,.12);
+}
+.wf-card:hover { transform: translateY(-3px) rotate(-1deg); box-shadow: 0 6px 20px rgba(255,112,67,.22); border-color: rgba(255,112,67,.5); }
+.wf-speak { position: absolute; top: 8px; right: 8px; }
+.wf-word  { font-family: 'Noto Sans Kannada', sans-serif; font-size: 1.15rem; font-weight: 700; color: var(--ink); margin: 8px 0 3px; }
+.wf-hl    { color: var(--coral); font-weight: 800; background: rgba(255,112,67,.15); border-radius: 4px; padding: 0 2px; }
+.wf-tr    { font-size: .74rem; color: #546E7A; font-style: italic; margin-bottom: 6px; }
+.wf-mean  { font-size: .78rem; font-weight: 800; color: #BF360C; background: rgba(255,112,67,.12); border-radius: 20px; padding: 2px 10px; display: inline-block; }
+
+/* ══════════════════════════════════════
+   CELEBRATION OVERLAY
+══════════════════════════════════════ */
+.celebration {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(26,35,126,.85);
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s;
+}
+.celebration.show { opacity: 1; pointer-events: all; }
+.celebration-content {
+  background: white;
+  border-radius: 28px;
+  padding: 36px 48px;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0,0,0,.3);
+  animation: celebPop .5s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes celebPop {
+  from { transform: scale(.5) rotate(-5deg); }
+  to   { transform: scale(1) rotate(0deg); }
+}
+.celeb-emoji  { font-size: 4rem; display: block; margin-bottom: 12px; }
+.celeb-title  { font-family: 'Baloo 2', cursive; font-size: 1.8rem; font-weight: 800; color: var(--ink); }
+.celeb-sub    { font-size: 1rem; color: #546E7A; margin: 8px 0 20px; font-weight: 700; }
+.celeb-stars  { font-size: 2rem; letter-spacing: 4px; margin-bottom: 20px; }
+.celeb-btn {
+  background: linear-gradient(135deg, var(--sun), var(--peach));
+  border: none; border-radius: 50px;
+  padding: 12px 32px; font-size: 1rem; font-weight: 800;
+  color: var(--ink); cursor: pointer; font-family: 'Nunito', sans-serif;
+  box-shadow: 0 4px 16px rgba(255,214,0,.4);
+  transition: transform .2s;
+}
+.celeb-btn:hover { transform: scale(1.05); }
+
+/* ══════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════ */
+@media(max-width:600px){
+  .app-header   { padding:10px 14px; }
+  .settings-bar { padding:8px 14px; }
+  .container    { padding:16px 10px 60px; }
+  .vocab-grid, .wf-grid { grid-template-columns: 1fr; }
+  .ch-kn        { font-size:1.3rem; }
+  .version-badge { display:none; }
+}
+</style>
+</head>
+<body>
+
+<!-- floating stars decoration -->
+<div class="stars-bg" id="starsBg"></div>
+
+<!-- celebration overlay -->
+<div class="celebration" id="celebration">
+  <div class="celebration-content">
+    <span class="celeb-emoji" id="celebEmoji">🌟</span>
+    <div class="celeb-title" id="celebTitle">Well done!</div>
+    <div class="celeb-sub"  id="celebSub">You listened carefully!</div>
+    <div class="celeb-stars" id="celebStars">⭐⭐⭐</div>
+    <button class="celeb-btn" onclick="closeCelebration()">Keep Learning! 🚀</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════
+     HEADER
+══════════════════════════ -->
+<header class="app-header">
+  <div class="hdr-mascot">🦚</div>
+  <div class="hdr-text">
+    <div class="hdr-title">ಕನ್ನಡ Study Buddy</div>
+    <div class="hdr-sub">Class 2 · Exam Revision · Sarvam Voice</div>
+  </div>
+  <div class="hdr-right">
+    <div class="version-badge">v5.0</div>
+    <div class="star-counter" onclick="showStarCelebration()" title="Your stars!">
+      <span class="star">⭐</span>
+      <span id="starCount">0</span>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════════════════════
+     SETTINGS BAR
+══════════════════════════ -->
+<div class="settings-bar">
+  <span class="sbar-label">🎙 Voice:</span>
+
+  <div class="sbar-group">
+    <label>Speaker:</label>
+    <select class="sbar-select" id="speakerSel">
+      <option value="kavya"   selected>Kavya ⭐</option>
+      <option value="priya">Priya</option>
+      <option value="neha">Neha</option>
+      <option value="ritu">Ritu</option>
+      <option value="pooja">Pooja</option>
+      <option value="kavitha">Kavitha</option>
+      <option value="shruti">Shruti</option>
+      <option value="suhani">Suhani</option>
+    </select>
+  </div>
+
+  <div class="sbar-group">
+    <label>Model:</label>
+    <select class="sbar-select" id="modelSel" onchange="updateCostBadge()">
+      <option value="bulbul:v3" selected>Bulbul v3 (Best)</option>
+      <option value="bulbul:v2">Bulbul v2 (Save 50%)</option>
+    </select>
+    <span class="cost-badge cost-v3" id="costBadge">₹30/10K chars</span>
+  </div>
+
+  <div class="sbar-group">
+    <label>Pace:</label>
+    <input type="range" class="sbar-range" id="paceRange"
+           min="0.5" max="1.4" step="0.05" value="0.75"
+           oninput="document.getElementById('paceVal').textContent=
+                    parseFloat(this.value).toFixed(2)+'×'">
+    <span class="sbar-val" id="paceVal">0.75×</span>
+  </div>
+
+  <div class="sbar-group">
+    <span id="cacheInfo" title="Clips stored permanently on this device">0 saved</span>
+    <button class="clear-btn" onclick="clearCache()" title="Delete all stored audio from this device">🗑 clear all</button>
+  </div>
+
+  <button class="stop-btn" onclick="stopAudio()">⏹ Stop</button>
+</div>
+
+<!-- ══════════════════════════
+     MAIN
+══════════════════════════ -->
+<div class="container">
+  <div class="chapter-nav">
+    <span class="ch-nav-label">📖 Chapters:</span>
+    <div id="chapterTabs"></div>
+    <button class="add-ch-btn" onclick="showAddHint()">＋ Add Chapter</button>
+  </div>
+  <div id="chapterContent"></div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════
+   CONFIG
+══════════════════════════════════════════════ */
+const PROXY_URL = 'https://sarvam-kn-proxy.achallakiran.workers.dev';
+
+/* ══════════════════════════════════════════════
+   FLOATING STARS BACKGROUND
+══════════════════════════════════════════════ */
+(function() {
+  const bg = document.getElementById('starsBg');
+  const emojis = ['⭐','🌟','✨','💫','🌸','🎯','🏆'];
+  for (let i = 0; i < 18; i++) {
+    const s = document.createElement('div');
+    s.className = 'star-float';
+    s.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    s.style.left   = Math.random() * 100 + 'vw';
+    s.style.animationDuration = (12 + Math.random() * 20) + 's';
+    s.style.animationDelay   = (-Math.random() * 20) + 's';
+    s.style.fontSize = (.8 + Math.random() * .8) + 'rem';
+    bg.appendChild(s);
+  }
+})();
+
+/* ══════════════════════════════════════════════
+   STAR REWARD SYSTEM
+══════════════════════════════════════════════ */
+let starCount = parseInt(localStorage.getItem('kn_stars') || '0');
+let playsToday = parseInt(sessionStorage.getItem('kn_plays') || '0');
+
+function updateStarDisplay() {
+  document.getElementById('starCount').textContent = starCount;
+}
+updateStarDisplay();
+
+function awardStar(x, y) {
+  // Burst animation at click point
+  const burst = document.createElement('div');
+  burst.className = 'star-burst';
+  burst.textContent = '⭐';
+  burst.style.left = (x - 16) + 'px';
+  burst.style.top  = (y - 16) + 'px';
+  document.body.appendChild(burst);
+  setTimeout(() => burst.remove(), 700);
+
+  // Award star every 3 plays
+  playsToday++;
+  sessionStorage.setItem('kn_plays', playsToday);
+  if (playsToday % 3 === 0) {
+    starCount++;
+    localStorage.setItem('kn_stars', starCount);
+    updateStarDisplay();
+    if (playsToday % 9 === 0) showStarCelebration();
+  }
+}
+
+function showStarCelebration() {
+  const messages = [
+    { emoji:'🌟', title:'Superstar!', sub:'You are learning so well!' },
+    { emoji:'🏆', title:'Champion!',  sub:'Your Kannada is getting better!' },
+    { emoji:'🎉', title:'Wonderful!', sub:'Keep it up, champ!' },
+    { emoji:'🦚', title:'Excellent!', sub:'The peacock is proud of you!' },
+    { emoji:'🚀', title:'Blast off!', sub:'You are a reading rocket!' },
+  ];
+  const m = messages[Math.floor(Math.random() * messages.length)];
+  document.getElementById('celebEmoji').textContent = m.emoji;
+  document.getElementById('celebTitle').textContent = m.title;
+  document.getElementById('celebSub').textContent   = m.sub;
+  const stars = '⭐'.repeat(Math.min(starCount, 5)) || '⭐';
+  document.getElementById('celebStars').textContent = stars + '  ' + starCount + ' total!';
+  document.getElementById('celebration').classList.add('show');
+}
+function closeCelebration() {
+  document.getElementById('celebration').classList.remove('show');
+}
+
+/* ══════════════════════════════════════════════
+   MODEL COST BADGE
+══════════════════════════════════════════════ */
+function updateCostBadge() {
+  const model = document.getElementById('modelSel').value;
+  const badge = document.getElementById('costBadge');
+  if (model === 'bulbul:v3') {
+    badge.textContent = '₹30/10K chars';
+    badge.className = 'cost-badge cost-v3';
+  } else {
+    badge.textContent = '₹15/10K chars';
+    badge.className = 'cost-badge cost-v2';
+  }
+  // Clear in-memory cache only — IDB clips for this model are still valid
+  Object.keys(memCache).forEach(k => delete memCache[k]);
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   INDEXEDDB PERSISTENT AUDIO CACHE
+   ─────────────────────────────────────────────────────────────────
+   How it works:
+   1. User taps 🔊 → check IndexedDB first (instant, free)
+   2. Found  → play immediately, no API call, works offline
+   3. Missing → call Sarvam API → play → save to IndexedDB forever
+   4. Cache key = model + "|" + text  (so v2 and v3 cached separately)
+   5. Storage: ~50-200MB available depending on device/browser
+   6. Survives: tab close, browser restart, phone sleep
+   ══════════════════════════════════════════════════════════════════ */
+
+const DB_NAME    = 'KannadaStudyBuddy';
+const DB_VERSION = 1;
+const STORE_NAME = 'audioCache';
+
+// In-memory map for this session (avoids repeated IDB reads)
+const memCache = {};
+
+// IndexedDB handle — opened once at boot
+let db = null;
+
+function openDB() {
+  return new Promise((resolve, reject) => {
+    const req = indexedDB.open(DB_NAME, DB_VERSION);
+    req.onupgradeneeded = e => {
+      const d = e.target.result;
+      if (!d.objectStoreNames.contains(STORE_NAME)) {
+        // keyPath = the cache key; we also store metadata
+        d.createObjectStore(STORE_NAME, { keyPath: 'cacheKey' });
+      }
+    };
+    req.onsuccess = e => resolve(e.target.result);
+    req.onerror   = e => reject(e.target.error);
+  });
+}
+
+async function idbGet(key) {
+  if (!db) return null;
+  return new Promise((resolve, reject) => {
+    const tx  = db.transaction(STORE_NAME, 'readonly');
+    const req = tx.objectStore(STORE_NAME).get(key);
+    req.onsuccess = e => resolve(e.target.result || null);
+    req.onerror   = e => reject(e.target.error);
+  });
+}
+
+async function idbPut(key, wavBytes, meta) {
+  if (!db) return;
+  return new Promise((resolve, reject) => {
+    const tx  = db.transaction(STORE_NAME, 'readwrite');
+    const req = tx.objectStore(STORE_NAME).put({
+      cacheKey:  key,
+      wavBytes,          // Uint8Array — raw WAV binary
+      model:     meta.model,
+      speaker:   meta.speaker,
+      savedAt:   Date.now(),
+    });
+    req.onsuccess = () => resolve();
+    req.onerror   = e  => reject(e.target.error);
+  });
+}
+
+async function idbCount() {
+  if (!db) return 0;
+  return new Promise((resolve, reject) => {
+    const tx  = db.transaction(STORE_NAME, 'readonly');
+    const req = tx.objectStore(STORE_NAME).count();
+    req.onsuccess = e => resolve(e.target.result);
+    req.onerror   = e => reject(e.target.error);
+  });
+}
+
+async function idbClear() {
+  if (!db) return;
+  return new Promise((resolve, reject) => {
+    const tx  = db.transaction(STORE_NAME, 'readwrite');
+    const req = tx.objectStore(STORE_NAME).clear();
+    req.onsuccess = () => resolve();
+    req.onerror   = e  => reject(e.target.error);
+  });
+}
+
+/* ── Cache key — includes model so v2/v3 don't collide ── */
+function cacheKey(text) {
+  const model = document.getElementById('modelSel').value;
+  return model + '|' + text;
+}
+
+/* ── Update the cache count display ── */
+async function updateCacheCount() {
+  const n = await idbCount();
+  const el = document.getElementById('cacheInfo');
+  if (el) el.textContent = n + ' clip' + (n !== 1 ? 's saved' : ' saved');
+}
+
+/* ── Clear ALL stored audio (with confirmation) ── */
+async function clearCache() {
+  if (!confirm('Delete all saved audio clips from this device? They will be re-downloaded from Sarvam next time.')) return;
+  stopAudio();
+  Object.keys(memCache).forEach(k => delete memCache[k]);
+  await idbClear();
+  await updateCacheCount();
+}
+
+/* ══════════════════════════════════════════════
+   SARVAM TTS  — fetches from API when needed
+══════════════════════════════════════════════ */
+async function sarvamTTS(text) {
+  const speaker = document.getElementById('speakerSel').value;
+  const pace    = parseFloat(document.getElementById('paceRange').value);
+  const model   = document.getElementById('modelSel').value;
+
+  let res;
+  try {
+    res = await fetch(PROXY_URL, {
+      method:  'POST',
+      mode:    'cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text, target_language_code:'kn-IN', speaker, model, pace, speech_sample_rate:24000 })
+    });
+  } catch(e) {
+    throw new Error('Cannot reach voice server. Check your internet.');
+  }
+
+  const raw = await res.text();
+  if (!res.ok) {
+    let msg = 'HTTP ' + res.status;
+    try { const j = JSON.parse(raw); msg = j.error?.message || j.message || msg; } catch(_) {}
+    throw new Error(msg);
+  }
+  const data = JSON.parse(raw);
+  if (!data.audios?.[0]) throw new Error('No audio returned');
+
+  // Decode base64 → Uint8Array right away (efficient storage)
+  const b64 = data.audios[0];
+  const bin = atob(b64);
+  const bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  return bytes;  // Return raw bytes
+}
+
+/* ── Play a Uint8Array of WAV bytes ── */
+async function playWavBytes(bytes) {
+  stopAudio();
+  const blob  = new Blob([bytes], { type:'audio/wav' });
+  const url   = URL.createObjectURL(blob);
+  const audio = new Audio(url);
+  audio.onended = () => URL.revokeObjectURL(url);
+  currentAudio = audio;
+  try { await audio.play(); } catch(e) { URL.revokeObjectURL(url); throw e; }
+  return audio;
+}
+
+let currentAudio = null;
+let currentBtn   = null;
+let currentCard  = null;
+
+function stopAudio() {
+  if (currentAudio) { currentAudio.pause(); currentAudio = null; }
+  if (currentBtn) {
+    currentBtn.classList.remove('loading','playing','err');
+    currentBtn.innerHTML = '🔊 Speak';
+    currentBtn = null;
+  }
+  if (currentCard) { currentCard.classList.remove('card-active'); currentCard = null; }
+}
+
+async function speakKannada(text, btn, card, clickX, clickY) {
+  if (currentBtn === btn) { stopAudio(); return; }
+  stopAudio();
+  currentBtn  = btn;
+  currentCard = card || null;
+
+  btn.classList.add('loading');
+  btn.disabled = true;
+  if (card) card.classList.add('card-active');
+
+  const key = cacheKey(text);
+
+  try {
+    let wavBytes = null;
+
+    // ── Layer 1: check in-memory session cache (fastest) ──
+    if (memCache[key]) {
+      btn.innerHTML = '🔊 …';
+      wavBytes = memCache[key];
+    }
+
+    // ── Layer 2: check IndexedDB (device persistent) ──
+    if (!wavBytes) {
+      btn.innerHTML = '💾 …';
+      const record = await idbGet(key);
+      if (record) {
+        wavBytes = record.wavBytes;
+        memCache[key] = wavBytes;  // warm memory cache too
+      }
+    }
+
+    // ── Layer 3: fetch from Sarvam API (first time only) ──
+    if (!wavBytes) {
+      btn.innerHTML = '⏳ Fetching…';
+      const model   = document.getElementById('modelSel').value;
+      const speaker = document.getElementById('speakerSel').value;
+      wavBytes = await sarvamTTS(text);
+      memCache[key] = wavBytes;
+
+      // Save to IndexedDB in background (don't await — don't block playback)
+      idbPut(key, wavBytes, { model, speaker }).then(updateCacheCount);
+    }
+
+    btn.classList.remove('loading');
+    btn.classList.add('playing');
+    btn.innerHTML = '🔊 Playing…';
+    btn.disabled  = false;
+
+    const audio = await playWavBytes(wavBytes);
+    awardStar(clickX || window.innerWidth/2, clickY || window.innerHeight/2);
+
+    audio.onended = () => { if (currentBtn === btn) stopAudio(); };
+    audio.onerror = () => {
+      if (currentBtn === btn) {
+        btn.classList.remove('playing'); btn.classList.add('err');
+        btn.innerHTML = '⚠️ Playback err';
+        setTimeout(() => {
+          btn.classList.remove('err'); btn.innerHTML = '🔊 Speak';
+          if (card) card.classList.remove('card-active');
+          currentBtn = null; currentCard = null;
+        }, 2500);
+      }
+    };
+
+  } catch(e) {
+    btn.classList.remove('loading'); btn.classList.add('err');
+    btn.innerHTML = '⚠️ ' + (e.message || 'Error').substring(0,22);
+    btn.disabled  = false;
+    if (card) card.classList.remove('card-active');
+    currentBtn = null; currentCard = null;
+    setTimeout(() => { btn.classList.remove('err'); btn.innerHTML = '🔊 Speak'; }, 4000);
+  }
+}
+
+/* ══════════════════════════════════════════════
+   PROGRESS TRACKING
+══════════════════════════════════════════════ */
+const heardItems = new Set();
+function markHeard(key) {
+  heardItems.add(key);
+  const ch = CHAPTERS.find(c => c.id === activeId);
+  if (!ch) return;
+  const total   = ch.sections.reduce((s,sec) => s + sec.items.length, 0);
+  const heard   = [...heardItems].filter(k => k.startsWith(activeId+':')).length;
+  const pct     = Math.min(100, Math.round(heard / total * 100));
+  const fill    = document.getElementById('progressFill');
+  const label   = document.getElementById('progressLabel');
+  if (fill)  fill.style.width  = pct + '%';
+  if (label) label.textContent = pct + '% heard today';
+}
+
+/* ══════════════════════════════════════════════
+   CHAPTER DATA
+   ─────────────────────────────────────────────
+   ══ ADD MORE CHAPTERS BELOW the ch1 object ══
+══════════════════════════════════════════════ */
+const CHAPTERS = [
+  {
+    id: 'ch1',
+    number: 'Chapter 1',
+    emoji: '📖',
+    titleKannada: 'ಸತ್ಯವಂತ ಬಾಲಕ',
+    titleEnglish: 'The Truthful Boy',
+    sections: [
+
+      /* ── I. Word Meanings ── */
+      {
+        type:'vocab', iconClass:'ic-vocab', icon:'📝',
+        titleKn:'ಪದಗಳ ಅರ್ಥ', titleEn:'Word Meanings',
+        items:[
+          { kn:'ಸುಳಿವು – ಗುರುತು',                  tr:'Suḷivu – Gurutu',                 en:'Hint / Identity' },
+          { kn:'ಸದ್ದು – ಶಬ್ದ',                      tr:'Saddu – Śabda',                    en:'Sound' },
+          { kn:'ಪರಿಶೀಲಿಸು – ಪರೀಕ್ಷಿಸು',             tr:'Pariśīlisu – Parīkṣisu',           en:'Examine / Check' },
+          { kn:'ಆಶ್ಚರ್ಯ – ಅಚ್ಚರಿ',                  tr:'Āścarya – Accari',                 en:'Surprise / Wonder' },
+          { kn:'ಮೌನ – ಮಾತನಾಡದೆ ಇರುವುದು',            tr:'Mauna – Māṭanāḍade iruvudu',       en:'Silence / Not speaking' },
+        ]
+      },
+
+      /* ── II. One Sentence Answers ── */
+      {
+        type:'qa', iconClass:'ic-short', icon:'🗒️',
+        titleKn:'ಒಂದು ವಾಕ್ಯದಲ್ಲಿ ಉತ್ತರಿಸಿ', titleEn:'Answer in One Sentence',
+        items:[
+          {
+            qKn:'ಗುರುಗಳು ಎಲ್ಲಿಗೆ ಬಂದರು?',
+            qTr:'Gurugaḷu ellige bandaru?', qEn:'Where did the teacher come?',
+            aKn:'ಗುರುಗಳು ತರಗತಿಗೆ ಬಂದರು.',
+            aTr:'Gurugaḷu taragatige bandaru.', aEn:'The teacher came to the class.'
+          },
+          {
+            qKn:'ಹುಡುಗನಿಗೆ ಯಾವ ಸಾಲಿನಲ್ಲಿ ಕುಳಿತುಕೊಳ್ಳಲು ಹೇಳಿದರು?',
+            qTr:'Huḍuganige yāva sālinalli kuḷithukoḷḷalu hēḷidaru?',
+            qEn:'Which row was the boy told to sit in?',
+            aKn:'ಹುಡುಗನಿಗೆ ಮೊದಲನೇ ಸಾಲಿನಲ್ಲಿ ಕುಳಿತುಕೊಳ್ಳಲು ಹೇಳಿದರು.',
+            aTr:'Huḍuganige modalanē sālinalli kuḷithukoḷḷalu hēḷidaru.',
+            aEn:'The boy was told to sit in the first row.'
+          },
+          {
+            qKn:'ಬಾಲಕನಿಗೆ ಏನು ಹೇಳಲು ಮನಸ್ಸು ಬರಲಿಲ್ಲ?',
+            qTr:'Bālakanige ēnu hēḷalu manassu baralilla?',
+            qEn:'What did the boy not feel like saying?',
+            aKn:'ಬಾಲಕನಿಗೆ ಸುಳ್ಳು ಹೇಳಲು ಮನಸ್ಸು ಬರಲಿಲ್ಲ.',
+            aTr:'Bālakanige suḷḷu hēḷalu manassu baralilla.',
+            aEn:'The boy did not feel like telling a lie.'
+          },
+          {
+            qKn:'ಸತ್ಯವಂತ ಬಾಲಕನ ಹೆಸರೇನು?',
+            qTr:'Satyavanta bālakana hesarēnu?', qEn:"What is the truthful boy's name?",
+            aKn:'ಸತ್ಯವಂತ ಬಾಲಕನ ಹೆಸರು ಗೋಪಾಲಕೃಷ್ಣ.',
+            aTr:'Satyavanta bālakana hesaru Gōpālakṛṣṇa.',
+            aEn:"The truthful boy's name is Gopalakrishna."
+          },
+        ]
+      },
+
+      /* ── III. Detailed Answers ── */
+      {
+        type:'qa', iconClass:'ic-detail', icon:'📜',
+        titleKn:'ವಿವರವಾಗಿ ಉತ್ತರಿಸಿ', titleEn:'Answer in Detail',
+        items:[
+          {
+            qKn:'ಒಬ್ಬ ಬಾಲಕ ಎದ್ದು ನಿಂತು ಗುರುಗಳಿಗೆ ಏನೆಂದು ಹೇಳಿದನು?',
+            qTr:'Obba bālaka eddu nintu gurugaḷige ēnendu hēḷidanu?',
+            qEn:'What did one boy stand up and say to the teacher?',
+            aKn:'ಒಬ್ಬ ಬಾಲಕ ಎದ್ದು ನಿಂತು ಗುರುಗಳಿಗೆ ನಾನು ಲೆಕ್ಕಗಳನ್ನು ಮಾಡಿ ತಂದಿದ್ದೇನೆ ಎಂದು ಹೇಳಿದನು.',
+            aTr:'Obba bālaka eddu nintu gurugaḷige nānu lekkagaḷannu māḍi tandiddēne endu hēḷidanu.',
+            aEn:'One boy stood up and told the teacher, I have done the sums and brought them.'
+          },
+          {
+            qKn:'ಗುರುಗಳಿಗೆ ಅಚ್ಚರಿ ಮತ್ತು ಆನಂದ ಏಕಾಯಿತು?',
+            qTr:'Gurugaḷige accari mattu ānanda ēkāyitu?',
+            qEn:'Why was the teacher surprised and happy?',
+            aKn:'ಗುರುಗಳಿಗೆ ಬಾಲಕನ ಪ್ರಾಮಾಣಿಕತೆ ಕಂಡು ಅಚ್ಚರಿ ಮತ್ತು ಆನಂದ ವಾಯಿತು.',
+            aTr:'Gurugaḷige bālakana prāmāṇikate kaṇḍu accari mattu ānanda vāyitu.',
+            aEn:"The teacher was surprised and happy on seeing the boy's honesty."
+          },
+        ]
+      },
+
+      /* ── IV. Fill in Blanks ── */
+      {
+        type:'fill', iconClass:'ic-fill', icon:'✏️',
+        titleKn:'ಬಿಟ್ಟ ಸ್ಥಳ ತುಂಬಿರಿ', titleEn:'Fill in the Blanks',
+        items:[
+          { sentenceKn:'ಭೀಷ್ಮ ನೀನು <u>ಜಾಣ</u>.', speakKn:'ಭೀಷ್ಮ ನೀನು ಜಾಣ.', tr:'Bhīṣma nīnu jāṇa.', en:'Bhishma, you are smart.' },
+          { sentenceKn:'ಅವನು ಒಂದು <u>ಹೆಜ್ಜೆ</u>ಯನ್ನು ಮುಂದೆ ಇಡಲಿಲ್ಲ.', speakKn:'ಅವನು ಒಂದು ಹೆಜ್ಜೆಯನ್ನು ಮುಂದೆ ಇಡಲಿಲ್ಲ.', tr:'Avanu ondu hejjeyannu munde iḍalilla.', en:'He did not take a single step forward.' },
+          { sentenceKn:'ಇವರು ಮಹಿಳೆಯರಿಗೂ <u>ಶಿಕ್ಷಣ</u> ಬೇಕೆಂದು ಹೇಳಿದನು.', speakKn:'ಇವರು ಮಹಿಳೆಯರಿಗೂ ಶಿಕ್ಷಣ ಬೇಕೆಂದು ಹೇಳಿದನು.', tr:'Ivaru mahiḷeyarigū śikṣaṇa bēkendu hēḷidanu.', en:'He said that women too need education.' },
+        ]
+      },
+
+      /* ── V. Form the Word ── */
+      {
+        type:'wordform', iconClass:'ic-form', icon:'🔤',
+        titleKn:'ಆವರಣದಲ್ಲಿರುವ ಅಕ್ಷರ ಬಳಸಿ ಸೂಕ್ತ ಪದ ರಚಿಸಿ', titleEn:'Form the Correct Word',
+        items:[
+          { displayKn:'ಅ<hl>ಭಿ</hl>ಮಾನ',           speakKn:'ಅಭಿಮಾನ',         tr:'Abhimāna',     en:'Pride / Affection' },
+          { displayKn:'<hl>ಪ್ರಾ</hl>ಮಾಣಿಕತೆ',       speakKn:'ಪ್ರಾಮಾಣಿಕತೆ',   tr:'Prāmāṇikate', en:'Honesty' },
+          { displayKn:'ಹರ<hl>ಸು</hl>',              speakKn:'ಹರಸು',           tr:'Harasu',       en:'To Bless' },
+          { displayKn:'ಸತ್ಯ<hl>ವಂ</hl>ತ',           speakKn:'ಸತ್ಯವಂತ',       tr:'Satyavanta',   en:'Truthful' },
+        ]
+      },
+    ]
+  },
+
+  /* ══ ADD MORE CHAPTERS BELOW THIS LINE ══
+
+  {
+    id: 'ch2',
+    number: 'Chapter 2',
+    emoji: '🌸',
+    titleKannada: '…',
+    titleEnglish: '…',
+    sections: [
+      {
+        type:'vocab', iconClass:'ic-vocab', icon:'📝',
+        titleKn:'ಪದಗಳ ಅರ್ಥ', titleEn:'Word Meanings',
+        items:[ { kn:'…', tr:'…', en:'…' } ]
+      },
+      {
+        type:'qa', iconClass:'ic-short', icon:'🗒️',
+        titleKn:'ಒಂದು ವಾಕ್ಯದಲ್ಲಿ ಉತ್ತರಿಸಿ', titleEn:'Answer in One Sentence',
+        items:[ { qKn:'…', qTr:'…', qEn:'…', aKn:'…', aTr:'…', aEn:'…' } ]
+      },
+      {
+        type:'fill', iconClass:'ic-fill', icon:'✏️',
+        titleKn:'ಬಿಟ್ಟ ಸ್ಥಳ ತುಂಬಿರಿ', titleEn:'Fill in the Blanks',
+        items:[ { sentenceKn:'… <u>word</u> …', speakKn:'… word …', tr:'…', en:'…' } ]
+      },
+      {
+        type:'wordform', iconClass:'ic-form', icon:'🔤',
+        titleKn:'ಆವರಣದಲ್ಲಿರುವ ಅಕ್ಷರ ಬಳಸಿ ಸೂಕ್ತ ಪದ ರಚಿಸಿ', titleEn:'Form the Correct Word',
+        items:[ { displayKn:'ಪದ<hl>ಅಕ್ಷರ</hl>', speakKn:'ಪದ', tr:'…', en:'…' } ]
+      },
+    ]
+  },
+
+  ══════════════════════════════════════ */
+];
+
+/* ══════════════════════════════════════════════
+   RENDER ENGINE
+══════════════════════════════════════════════ */
+let activeId = CHAPTERS[0].id;
+const REFS   = {};
+let   refN   = 0;
+const mkRef  = t => { const id='r'+(refN++); REFS[id]=t; return id; };
+
+function renderTabs() {
+  document.getElementById('chapterTabs').innerHTML =
+    CHAPTERS.map(ch =>
+      `<button class="ch-tab${ch.id===activeId?' active':''}"
+               onclick="switchChapter('${ch.id}')">
+         ${ch.emoji || '📖'} ${ch.number}
+       </button>`
+    ).join('');
+}
+
+function switchChapter(id) {
+  stopAudio();
+  activeId = id;
+  renderTabs();
+  renderContent();
+}
+
+function renderContent() {
+  const ch = CHAPTERS.find(c => c.id === activeId);
+  const el = document.getElementById('chapterContent');
+  if (!ch) { el.innerHTML=''; return; }
+
+  const total = ch.sections.reduce((s,sec) => s+sec.items.length, 0);
+  const heard = [...heardItems].filter(k=>k.startsWith(activeId+':')).length;
+  const pct   = total ? Math.round(heard/total*100) : 0;
+
+  el.innerHTML =
+    `<div class="ch-hero">
+       <div class="ch-hero-emoji">${ch.emoji||'📖'}</div>
+       <div class="ch-num">${ch.number}</div>
+       <div class="ch-kn">${ch.titleKannada}</div>
+       <div class="ch-en">${ch.titleEnglish}</div>
+       <div class="ch-progress">
+         <div class="ch-progress-bar">
+           <div class="ch-progress-fill" id="progressFill" style="width:${pct}%"></div>
+         </div>
+         <div class="ch-progress-label" id="progressLabel">${pct}% heard today</div>
+       </div>
+     </div>` +
+    ch.sections.map((s,i) => renderSection(s,i)).join('');
+
+  const fh = el.querySelector('.sec-hdr');
+  if (fh) toggle(fh);
+}
+
+function renderSection(s, idx) {
+  let body = '';
+  if      (s.type==='vocab')    body = renderVocab(s.items);
+  else if (s.type==='qa')       body = renderQA(s.items);
+  else if (s.type==='fill')     body = renderFill(s.items);
+  else if (s.type==='wordform') body = renderWordForm(s.items);
+
+  return `
+  <div class="sec-card" style="animation-delay:${idx*.08}s">
+    <div class="sec-hdr" onclick="toggle(this)">
+      <div class="sec-icon-wrap ${s.iconClass}">${s.icon}</div>
+      <div class="sec-titles">
+        <div class="sec-title-kn">${s.titleKn}</div>
+        <div class="sec-title-en">${s.titleEn}</div>
+      </div>
+      <div class="sec-count">${s.items.length} items</div>
+      <div class="sec-chevron">▼</div>
+    </div>
+    <div class="sec-body">${body}</div>
+  </div>`;
+}
+
+function toggle(hdr) {
+  hdr.classList.toggle('open');
+  hdr.nextElementSibling.classList.toggle('open');
+}
+
+/* ── Vocab ── */
+function renderVocab(items) {
+  return `<div class="vocab-grid">${items.map((it,i) => {
+    const r = mkRef(it.kn);
+    return `
+    <div class="vocab-card" id="${r}_c">
+      <div class="vocab-top">
+        <div class="vocab-num">Word ${i+1}</div>
+        <button class="speak-btn" id="${r}_b" onclick="go('${r}',event)">🔊 Speak</button>
+      </div>
+      <div class="vocab-kn">${it.kn}</div>
+      <div class="vocab-tr">${it.tr}</div>
+      <span class="vocab-en">${it.en}</span>
+    </div>`;
+  }).join('')}</div>`;
+}
+
+/* ── Q & A ── */
+function renderQA(items) {
+  return items.map((it,i) => {
+    const q = mkRef(it.qKn);
+    const a = mkRef(it.aKn);
+    return `
+    <div class="qa-item" id="${q}_c">
+      <div class="qa-q-block">
+        <div class="qa-q-top">
+          <div class="qa-q-label">❓ Question ${i+1}</div>
+          <button class="speak-btn" id="${q}_b" onclick="go('${q}',event)">🔊 Speak Q</button>
+        </div>
+        <div class="qa-kn">${it.qKn}</div>
+        <div class="qa-tr">${it.qTr}</div>
+        <div class="qa-en">🔵 ${it.qEn}</div>
+      </div>
+      <div class="qa-a-block">
+        <div class="qa-a-top">
+          <div class="qa-a-label">✅ Answer</div>
+          <button class="speak-btn" id="${a}_b" onclick="go('${a}',event)">🔊 Speak A</button>
+        </div>
+        <div class="qa-ans-kn">${it.aKn}</div>
+        <div class="qa-ans-tr">${it.aTr}</div>
+        <div class="qa-ans-en">🟢 ${it.aEn}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+/* ── Fill ── */
+function renderFill(items) {
+  return `<ul class="fill-list">${items.map((it,i) => {
+    const r = mkRef(it.speakKn);
+    return `
+    <li class="fill-item" id="${r}_c">
+      <div class="fill-num">${i+1}</div>
+      <div class="fill-body">
+        <div class="fill-top">
+          <div class="fill-kn">${it.sentenceKn}</div>
+          <button class="speak-btn" id="${r}_b" onclick="go('${r}',event)">🔊 Speak</button>
+        </div>
+        <div class="fill-tr">${it.tr}</div>
+        <div class="fill-en">${it.en}</div>
+      </div>
+    </li>`;
+  }).join('')}</ul>`;
+}
+
+/* ── Word Form ── */
+function renderWordForm(items) {
+  return `<div class="wf-grid">${items.map(it => {
+    const r    = mkRef(it.speakKn);
+    const disp = it.displayKn.replace(/<hl>(.*?)<\/hl>/g,'<span class="wf-hl">$1</span>');
+    return `
+    <div class="wf-card" id="${r}_c">
+      <button class="speak-btn wf-speak" id="${r}_b" onclick="go('${r}',event)">🔊</button>
+      <div class="wf-word">${disp}</div>
+      <div class="wf-tr">${it.tr}</div>
+      <span class="wf-mean">${it.en}</span>
+    </div>`;
+  }).join('')}</div>`;
+}
+
+/* ── Dispatcher ── */
+function go(r, evt) {
+  const text = REFS[r];
+  const btn  = document.getElementById(r+'_b');
+  const card = document.getElementById(r+'_c');
+  const x    = evt ? evt.clientX : window.innerWidth/2;
+  const y    = evt ? evt.clientY : window.innerHeight/2;
+  if (text && btn) {
+    markHeard(activeId+':'+r);
+    speakKannada(text, btn, card, x, y);
+  }
+}
+
+function showAddHint() {
+  alert(
+    '📖 To add Chapter 2:\n\n' +
+    '1. Open this HTML file in a text editor\n' +
+    '2. Find the comment  "ADD MORE CHAPTERS BELOW THIS LINE"\n' +
+    '3. Copy the template block and fill in your chapter data\n' +
+    '4. Save — the new tab appears automatically!\n\n' +
+    '📤 To update GitHub Pages:\n' +
+    '   git add index.html\n' +
+    '   git commit -m "Add chapter 2"\n' +
+    '   git push'
+  );
+}
+
+/* ── Boot ── */
+// Open IndexedDB, then render
+openDB()
+  .then(database => {
+    db = database;
+    console.log('[KN] IndexedDB opened successfully');
+    return updateCacheCount();
+  })
+  .catch(err => {
+    console.warn('[KN] IndexedDB unavailable, falling back to memory cache:', err);
+    db = null;
+  })
+  .finally(() => {
+    renderTabs();
+    renderContent();
+  });
+</script>
+</body>
+</html>
