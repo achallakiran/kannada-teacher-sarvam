@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<!--
+  ╔══════════════════════════════════════════════════════════════════════╗
+  ║  Class 2 Kannada Reading Companion  —  Sarvam TTS Edition           ║
+  ║  Proxy: sarvam-proxy.achallakiran.workers.dev                        ║
+  ║                                                                      ║
+  ║  GitHub Pages ready — single file, zero secrets, no build step.     ║
+  ║                                                                      ║
+  ║  TO ADD CHAPTERS:                                                    ║
+  ║  Find  ══ ADD MORE CHAPTERS BELOW  in the <script> section.         ║
+  ║  Copy the Chapter 1 block and fill in new content.                   ║
+  ╚══════════════════════════════════════════════════════════════════════╝
+-->
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ಕನ್ನಡ Reading Companion — Class 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Kannada:wght@300;400;600;700&family=Cinzel+Decorative:wght@400;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+
+/* ══════════════════════════════════════
+TOKENS
+══════════════════════════════════════ */
+:root {
+–saffron:      #E8751A;
+–deep-saffron: #C4581A;
+–turmeric:     #F5A623;
+–cream:        #FDF6E8;
+–parchment:    #F5E8C8;
+–brown:        #5C3D1E;
+–dark-brown:   #2C1810;
+–lotus:        #D4566E;
+–teal:         #2A7D6E;
+–shadow:       rgba(44,24,16,0.14);
+–speak-idle:   #3B6FD4;
+–speak-bg:     #EEF2FC;
+–speak-active: #2A9D5C;
+–radius:       14px;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+font-family: ‘Lora’, serif;
+background: var(–cream);
+color: var(–dark-brown);
+min-height: 100vh;
+background-image:
+radial-gradient(ellipse at 8% 0%,    rgba(232,117,26,.07) 0%, transparent 55%),
+radial-gradient(ellipse at 92% 100%, rgba(212,86,110,.05) 0%, transparent 55%);
+}
+
+/* ══════════════════════════════════════
+HEADER
+══════════════════════════════════════ */
+.app-header {
+background: linear-gradient(135deg, var(–brown) 0%, var(–dark-brown) 65%, #150805 100%);
+padding: 18px 32px;
+display: flex;
+align-items: center;
+gap: 14px;
+box-shadow: 0 4px 20px rgba(0,0,0,.32);
+position: sticky;
+top: 0;
+z-index: 100;
+}
+.app-header::before {
+content:’’; position:absolute; inset:0;
+background: repeating-linear-gradient(90deg,transparent,transparent 40px,
+rgba(232,117,26,.055) 40px,rgba(232,117,26,.055) 41px);
+pointer-events:none;
+}
+.hdr-icon { font-size:2rem; position:relative; z-index:1; flex-shrink:0; }
+.hdr-text { position:relative; z-index:1; flex:1; min-width:0; }
+.hdr-text h1 {
+font-family: ‘Cinzel Decorative’, serif;
+font-size: clamp(.82rem, 2vw, 1.05rem);
+color: var(–turmeric);
+letter-spacing: .04em;
+line-height: 1.25;
+}
+.hdr-text p {
+font-size:.72rem; color:rgba(245,166,35,.55);
+letter-spacing:.08em; text-transform:uppercase; margin-top:2px;
+}
+.hdr-right {
+position:relative; z-index:1;
+display:flex; align-items:center; gap:8px; flex-shrink:0;
+}
+.hdr-badge {
+background:rgba(232,117,26,.18); border:1px solid rgba(232,117,26,.38);
+border-radius:20px; padding:4px 12px; font-size:.72rem; color:var(–turmeric);
+}
+.api-pill {
+border-radius:20px; padding:4px 10px; font-size:.7rem;
+display:flex; align-items:center; gap:5px; white-space:nowrap;
+background:rgba(42,157,92,.18); color:#7FDBA8; border:1px solid rgba(42,157,92,.3);
+}
+.api-dot {
+width:6px; height:6px; border-radius:50%;
+background:currentColor; flex-shrink:0;
+animation:blink 2.4s ease-in-out infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+/* ══════════════════════════════════════
+VOICE BAR
+══════════════════════════════════════ */
+.voice-bar {
+background: white;
+border-bottom: 1px solid var(–parchment);
+padding: 9px 32px;
+display: flex;
+align-items: center;
+gap: 14px;
+flex-wrap: wrap;
+box-shadow: 0 2px 8px rgba(44,24,16,.05);
+}
+.vbar-label {
+font-size:.7rem; text-transform:uppercase;
+letter-spacing:.1em; color:#9A7A5A; font-weight:700; white-space:nowrap;
+}
+.vbar-group { display:flex; align-items:center; gap:6px; }
+.vbar-group label { font-size:.73rem; color:#9A7A5A; white-space:nowrap; }
+.vbar-select {
+font-family:‘Lora’,serif; font-size:.76rem;
+border:1px solid var(–parchment); border-radius:7px; padding:4px 8px;
+color:var(–dark-brown); background:var(–cream); outline:none; cursor:pointer;
+}
+.vbar-range { width:80px; accent-color:var(–saffron); }
+.vbar-val   { font-size:.72rem; color:var(–saffron); font-weight:700; min-width:30px; }
+.stop-btn {
+background:#FFF0F0; border:1px solid #FFCCCC; border-radius:8px;
+padding:4px 12px; font-size:.74rem; color:#CC4444;
+cursor:pointer; font-family:‘Lora’,serif; font-weight:700;
+transition:background .2s; white-space:nowrap;
+}
+.stop-btn:hover { background:#FFE0E0; }
+#cacheInfo { font-size:.7rem; color:#9A7A5A; }
+.clear-btn  { font-size:.68rem; color:#CC4444; background:none; border:none; cursor:pointer; padding:0 3px; }
+
+/* ══════════════════════════════════════
+CONTAINER & TABS
+══════════════════════════════════════ */
+.container { max-width:1080px; margin:0 auto; padding:26px 20px 70px; }
+
+.chapter-nav { display:flex; gap:9px; flex-wrap:wrap; margin-bottom:26px; align-items:center; }
+.ch-nav-label {
+font-size:.7rem; text-transform:uppercase; letter-spacing:.1em;
+color:var(–saffron); font-weight:700; margin-right:2px;
+}
+.ch-tab {
+background:white; border:2px solid var(–parchment); border-radius:50px;
+padding:7px 18px; font-size:.8rem; color:var(–brown); cursor:pointer;
+font-family:‘Lora’,serif; font-weight:600; transition:all .2s;
+box-shadow:0 2px 6px var(–shadow);
+}
+.ch-tab:hover  { border-color:var(–saffron); color:var(–saffron); transform:translateY(-1px); }
+.ch-tab.active {
+background:linear-gradient(135deg,var(–saffron),var(–deep-saffron));
+border-color:var(–deep-saffron); color:white;
+box-shadow:0 4px 14px rgba(232,117,26,.33);
+}
+.add-ch-btn {
+background:white; border:2px dashed var(–parchment); border-radius:50px;
+padding:7px 16px; font-size:.78rem; color:#C0A080; cursor:pointer;
+font-family:‘Lora’,serif; transition:all .2s;
+}
+.add-ch-btn:hover { border-color:var(–saffron); color:var(–saffron); }
+
+/* ══════════════════════════════════════
+CHAPTER HEADER
+══════════════════════════════════════ */
+.ch-header {
+background: linear-gradient(135deg, var(–brown) 0%, #3A1E0E 100%);
+border-radius:16px; padding:26px 30px; margin-bottom:22px;
+position:relative; overflow:hidden;
+box-shadow:0 6px 24px rgba(44,24,16,.24);
+}
+.ch-header::after {
+content:‘📖’; position:absolute; right:22px; bottom:8px;
+font-size:4.8rem; opacity:.07; pointer-events:none;
+}
+.ch-num      { font-size:.7rem; text-transform:uppercase; letter-spacing:.14em; color:rgba(245,166,35,.55); margin-bottom:5px; }
+.ch-title-kn { font-family:‘Noto Sans Kannada’,sans-serif; font-size:1.75rem; font-weight:700; color:var(–turmeric); line-height:1.3; }
+.ch-title-en { font-size:.95rem; color:rgba(253,246,232,.65); font-style:italic; margin-top:3px; }
+
+/* ══════════════════════════════════════
+SECTION CARDS
+══════════════════════════════════════ */
+.sec-card {
+background:white; border-radius:var(–radius); margin-bottom:18px;
+box-shadow:0 3px 14px var(–shadow); border:1px solid rgba(232,117,26,.09);
+overflow:hidden; animation:fadeUp .38s ease both;
+}
+@keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+
+.sec-hdr {
+display:flex; align-items:center; gap:13px; padding:15px 20px;
+cursor:pointer; user-select:none;
+border-bottom:1px solid transparent; transition:background .18s;
+}
+.sec-hdr:hover { background:rgba(232,117,26,.04); }
+.sec-hdr.open  { border-bottom-color:var(–parchment); }
+
+.sec-icon { width:36px; height:36px; border-radius:9px; display:flex; align-items:center; justify-content:center; font-size:1rem; flex-shrink:0; }
+.ic-vocab  { background:linear-gradient(135deg,#FFF0DC,#FFD9A0); }
+.ic-short  { background:linear-gradient(135deg,#DCF0E8,#A0D9B8); }
+.ic-detail { background:linear-gradient(135deg,#DCE8FF,#A0B8F0); }
+.ic-fill   { background:linear-gradient(135deg,#F0DCF0,#D9A0D9); }
+.ic-form   { background:linear-gradient(135deg,#FFE8DC,#F0A880); }
+
+.sec-titles   { flex:1; }
+.sec-title-kn { font-family:‘Noto Sans Kannada’,sans-serif; font-size:.92rem; font-weight:600; color:var(–dark-brown); }
+.sec-title-en { font-size:.72rem; color:#9B7A5A; margin-top:1px; }
+.sec-count    { font-size:.7rem; background:var(–parchment); color:var(–brown); border-radius:12px; padding:3px 10px; font-weight:600; }
+.sec-chevron  { font-size:.75rem; color:#C0A080; transition:transform .28s ease; }
+.sec-hdr.open .sec-chevron { transform:rotate(180deg); }
+
+.sec-body { display:none; padding:16px 20px 20px; }
+.sec-body.open { display:block; }
+
+/* ══════════════════════════════════════
+SPEAK BUTTON  (Kannada only)
+══════════════════════════════════════ */
+.speak-btn {
+display:inline-flex; align-items:center; gap:4px;
+background:var(–speak-bg); border:1.5px solid rgba(59,111,212,.22);
+border-radius:22px; padding:4px 11px;
+font-size:.7rem; font-weight:700; color:var(–speak-idle);
+cursor:pointer; font-family:‘Lora’,serif;
+transition:all .18s; white-space:nowrap; flex-shrink:0; line-height:1.4;
+}
+.speak-btn:hover    { background:#D8E4FC; border-color:rgba(59,111,212,.45); }
+.speak-btn:disabled { opacity:.45; cursor:not-allowed; }
+
+.speak-btn.loading {
+color:#8A6A30; background:#FFF8DC; border-color:rgba(200,150,30,.35);
+animation:loadpulse .9s ease-in-out infinite;
+}
+@keyframes loadpulse { 0%,100%{opacity:1} 50%{opacity:.5} }
+
+.speak-btn.playing {
+background:linear-gradient(135deg,#E8F5EE,#C5EDD8);
+border-color:rgba(42,157,92,.4); color:var(–speak-active);
+animation:playglow 1.1s ease-in-out infinite;
+}
+@keyframes playglow { 0%,100%{box-shadow:0 0 0 0 rgba(42,157,92,.3)} 50%{box-shadow:0 0 0 5px rgba(42,157,92,0)} }
+
+.speak-btn.err { background:#FFF0F0; border-color:rgba(200,60,60,.3); color:#CC4444; }
+
+.card-active { outline:2px solid var(–speak-active); outline-offset:2px; border-radius:var(–radius); }
+
+/* ══════════════════════════════════════
+VOCAB
+══════════════════════════════════════ */
+.vocab-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(290px,1fr)); gap:11px; }
+.vocab-card {
+background:var(–cream); border-radius:11px; padding:13px 15px;
+border-left:4px solid var(–turmeric);
+transition:transform .18s,box-shadow .18s;
+}
+.vocab-card:hover { transform:translateY(-2px); box-shadow:0 4px 14px rgba(232,117,26,.14); }
+.vocab-top { display:flex; justify-content:space-between; align-items:flex-start; gap:8px; margin-bottom:7px; }
+.vocab-num { font-size:.62rem; color:var(–saffron); font-weight:700; letter-spacing:.1em; text-transform:uppercase; }
+.vocab-kn  { font-family:‘Noto Sans Kannada’,sans-serif; font-size:1.02rem; font-weight:600; color:var(–dark-brown); margin-bottom:2px; }
+.vocab-tr  { font-size:.76rem; color:#8A6A4A; font-style:italic; margin-bottom:5px; }
+.vocab-en  { font-size:.8rem; font-weight:600; color:var(–teal); background:rgba(42,125,110,.09); display:inline-block; padding:2px 8px; border-radius:6px; }
+
+/* ══════════════════════════════════════
+Q & A
+══════════════════════════════════════ */
+.qa-item { border-radius:11px; margin-bottom:13px; overflow:hidden; border:1px solid var(–parchment); }
+.qa-item:last-child { margin-bottom:0; }
+.qa-q-block { background:var(–parchment); padding:12px 15px; }
+.qa-q-top   { display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:4px; }
+.qa-q-label { font-size:.62rem; text-transform:uppercase; letter-spacing:.1em; color:var(–saffron); font-weight:700; }
+.qa-kn      { font-family:‘Noto Sans Kannada’,sans-serif; font-size:.98rem; font-weight:600; color:var(–dark-brown); line-height:1.5; }
+.qa-tr      { font-size:.74rem; color:#9A7A5A; font-style:italic; margin-top:3px; }
+.qa-en      { font-size:.8rem; color:var(–teal); font-weight:600; margin-top:3px; }
+.qa-a-block { background:white; padding:12px 15px; }
+.qa-a-top   { display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:4px; }
+.qa-a-label { font-size:.62rem; text-transform:uppercase; letter-spacing:.1em; color:var(–teal); font-weight:700; }
+.qa-ans-kn  { font-family:‘Noto Sans Kannada’,sans-serif; font-size:.95rem; color:var(–dark-brown); line-height:1.5; }
+.qa-ans-tr  { font-size:.74rem; color:#9A7A5A; font-style:italic; margin-top:3px; }
+.qa-ans-en  { font-size:.78rem; color:#4A7D6E; margin-top:3px; font-style:italic; }
+
+/* ══════════════════════════════════════
+FILL IN BLANKS
+══════════════════════════════════════ */
+.fill-list { list-style:none; }
+.fill-item { display:flex; gap:13px; align-items:flex-start; padding:11px 0; border-bottom:1px solid var(–parchment); }
+.fill-item:last-child { border-bottom:none; }
+.fill-num  { background:var(–saffron); color:white; border-radius:50%; width:25px; height:25px; display:flex; align-items:center; justify-content:center; font-size:.75rem; font-weight:700; flex-shrink:0; margin-top:2px; }
+.fill-body { flex:1; }
+.fill-top  { display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:3px; }
+.fill-kn   { font-family:‘Noto Sans Kannada’,sans-serif; font-size:.98rem; font-weight:600; color:var(–dark-brown); }
+.fill-kn u { text-underline-offset:3px; text-decoration-color:var(–saffron); color:var(–deep-saffron); }
+.fill-tr   { font-size:.74rem; color:#9A7A5A; font-style:italic; margin-top:2px; }
+.fill-en   { font-size:.78rem; color:var(–teal); font-weight:600; margin-top:2px; }
+
+/* ══════════════════════════════════════
+WORD FORM
+══════════════════════════════════════ */
+.wf-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:11px; }
+.wf-card {
+background:var(–cream); border-radius:11px; padding:13px 15px;
+text-align:center; border:2px solid var(–parchment);
+transition:all .18s; position:relative;
+}
+.wf-card:hover { border-color:var(–turmeric); box-shadow:0 4px 14px rgba(245,166,35,.14); transform:translateY(-2px); }
+.wf-speak { position:absolute; top:9px; right:9px; }
+.wf-word  { font-family:‘Noto Sans Kannada’,sans-serif; font-size:1.12rem; font-weight:700; color:var(–dark-brown); margin:8px 0 3px; }
+.wf-hl    { color:var(–lotus); font-weight:700; }
+.wf-tr    { font-size:.74rem; color:#9A7A5A; font-style:italic; margin-bottom:6px; }
+.wf-mean  { font-size:.78rem; font-weight:600; color:var(–teal); background:rgba(42,125,110,.1); border-radius:6px; padding:2px 8px; display:inline-block; }
+
+/* ══════════════════════════════════════
+RESPONSIVE
+══════════════════════════════════════ */
+@media(max-width:600px){
+.app-header { padding:14px 16px; }
+.voice-bar  { padding:9px 16px; }
+.container  { padding:16px 12px 56px; }
+.vocab-grid, .wf-grid { grid-template-columns:1fr; }
+.ch-title-kn { font-size:1.3rem; }
+.hdr-badge { display:none; }
+}
+</style>
+
+</head>
+<body>
+
+<!-- ══════════════════════════
+     HEADER
+══════════════════════════ -->
+
+<header class="app-header">
+  <div class="hdr-icon">🪔</div>
+  <div class="hdr-text">
+    <h1>Kannada Reading Companion</h1>
+    <p>Class 2 · Exam Revision · Sarvam Voice</p>
+  </div>
+  <div class="hdr-right">
+    <div class="hdr-badge">📚 Parent Guide</div>
+    <div class="api-pill">
+      <span class="api-dot"></span>
+      <span>Voice On</span>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════════════════════
+     VOICE SETTINGS BAR
+══════════════════════════ -->
+
+<div class="voice-bar">
+  <span class="vbar-label">🎙 Teacher Voice:</span>
+
+  <div class="vbar-group">
+    <label>Speaker:</label>
+    <select class="vbar-select" id="speakerSel">
+      <option value="kavya"   selected>Kavya ⭐</option>
+      <option value="priya">Priya</option>
+      <option value="neha">Neha</option>
+      <option value="ritu">Ritu</option>
+      <option value="pooja">Pooja</option>
+      <option value="kavitha">Kavitha</option>
+      <option value="shruti">Shruti</option>
+      <option value="suhani">Suhani</option>
+    </select>
+  </div>
+
+  <div class="vbar-group">
+    <label>Pace:</label>
+    <input type="range" class="vbar-range" id="paceRange"
+           min="0.5" max="1.4" step="0.05" value="0.75"
+           oninput="document.getElementById('paceVal').textContent=
+                    parseFloat(this.value).toFixed(2)+'×'">
+    <span class="vbar-val" id="paceVal">0.75×</span>
+  </div>
+
+  <div class="vbar-group">
+    <label>Cache:</label>
+    <span id="cacheInfo">0 clips</span>
+    <button class="clear-btn" onclick="clearCache()" title="Clear audio cache">✕ clear</button>
+  </div>
+
+<button class="stop-btn" onclick="stopAudio()">⏹ Stop</button>
+
+</div>
+
+<!-- ══════════════════════════
+     MAIN
+══════════════════════════ -->
+
+<div class="container">
+  <div class="chapter-nav">
+    <span class="ch-nav-label">Chapters:</span>
+    <div id="chapterTabs"></div>
+    <button class="add-ch-btn" onclick="showAddHint()">＋ Add Chapter</button>
+  </div>
+  <div id="chapterContent"></div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════════
+   PROXY  — your Cloudflare Worker
+══════════════════════════════════════════════════════ */
+const PROXY_URL = 'https://sarvam-proxy.achallakiran.workers.dev';
+
+/* ══════════════════════════════════════════════════════
+   SARVAM TTS ENGINE
+══════════════════════════════════════════════════════ */
+let audioCache   = {};   // text → base64 wav
+let currentAudio = null;
+let currentBtn   = null;
+let currentCard  = null;
+
+async function sarvamTTS(text) {
+  const speaker = document.getElementById('speakerSel').value;
+  const pace    = parseFloat(document.getElementById('paceRange').value);
+
+  const res = await fetch(PROXY_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      text,
+      target_language_code: 'kn-IN',
+      speaker,
+      model: 'bulbul:v3',
+      pace,
+      speech_sample_rate: 24000,
+    })
+  });
+
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.error || `HTTP ${res.status}`);
+  }
+  const data = await res.json();
+  if (!data.audios?.[0]) throw new Error('No audio in response');
+  return data.audios[0]; // base64 wav
+}
+
+function playBase64(b64) {
+  stopAudio();
+  const audio = new Audio('data:audio/wav;base64,' + b64);
+  currentAudio = audio;
+  audio.play();
+  return audio;
+}
+
+function stopAudio() {
+  if (currentAudio) { currentAudio.pause(); currentAudio = null; }
+  if (currentBtn)   {
+    currentBtn.classList.remove('loading','playing','err');
+    currentBtn.innerHTML = '🔊 Speak';
+    currentBtn = null;
+  }
+  if (currentCard)  { currentCard.classList.remove('card-active'); currentCard = null; }
+}
+
+async function speakKannada(text, btn, card) {
+  // Toggle off if same button tapped again
+  if (currentBtn === btn) { stopAudio(); return; }
+
+  stopAudio();
+  currentBtn  = btn;
+  currentCard = card || null;
+
+  btn.classList.add('loading');
+  btn.innerHTML = '⏳ Loading…';
+  btn.disabled  = true;
+  if (card) card.classList.add('card-active');
+
+  try {
+    if (!audioCache[text]) {
+      audioCache[text] = await sarvamTTS(text);
+      updateCacheCount();
+    }
+
+    btn.classList.remove('loading');
+    btn.classList.add('playing');
+    btn.innerHTML = '🔊 Playing…';
+    btn.disabled  = false;
+
+    const audio = playBase64(audioCache[text]);
+
+    audio.onended = () => { if (currentBtn === btn) stopAudio(); };
+    audio.onerror = () => {
+      if (currentBtn === btn) {
+        btn.classList.remove('playing');
+        btn.classList.add('err');
+        btn.innerHTML = '⚠️ Error';
+        btn.disabled  = false;
+        setTimeout(() => {
+          btn.classList.remove('err');
+          btn.innerHTML = '🔊 Speak';
+          if (card) card.classList.remove('card-active');
+          currentBtn = null; currentCard = null;
+        }, 2500);
+      }
+    };
+
+  } catch(e) {
+    btn.classList.remove('loading');
+    btn.classList.add('err');
+    btn.innerHTML = '⚠️ ' + (e.message.length < 28 ? e.message : 'API error');
+    btn.disabled  = false;
+    if (card) card.classList.remove('card-active');
+    currentBtn = null; currentCard = null;
+    setTimeout(() => {
+      btn.classList.remove('err');
+      btn.innerHTML = '🔊 Speak';
+    }, 3000);
+  }
+}
+
+function updateCacheCount() {
+  const n = Object.keys(audioCache).length;
+  document.getElementById('cacheInfo').textContent = n + ' clip' + (n!==1?'s':'');
+}
+function clearCache() { stopAudio(); audioCache = {}; updateCacheCount(); }
+
+
+/* ══════════════════════════════════════════════════════
+   CHAPTER DATA
+   ──────────────────────────────────────────────────────
+   Add chapters below the comment  ══ ADD MORE CHAPTERS
+══════════════════════════════════════════════════════ */
+const CHAPTERS = [
+  {
+    id: 'ch1',
+    number: 'Chapter 1',
+    titleKannada: 'ಸತ್ಯವಂತ ಬಾಲಕ',
+    titleEnglish: 'The Truthful Boy',
+    sections: [
+
+      /* ─────────────────────────────────────
+         I.  ಪದಗಳ ಅರ್ಥ  —  Word Meanings
+      ───────────────────────────────────── */
+      {
+        type:'vocab', iconClass:'ic-vocab', icon:'📝',
+        titleKn:'ಪದಗಳ ಅರ್ಥ', titleEn:'Word Meanings',
+        items:[
+          {
+            kn:'ಸುಳಿವು – ಗುರುತು',
+            tr:'Suḷivu – Gurutu',
+            en:'Hint / Identity'
+          },
+          {
+            kn:'ಸದ್ದು – ಶಬ್ದ',
+            tr:'Saddu – Śabda',
+            en:'Sound'
+          },
+          {
+            kn:'ಪರಿಶೀಲಿಸು – ಪರೀಕ್ಷಿಸು',
+            tr:'Pariśīlisu – Parīkṣisu',
+            en:'Examine / Check'
+          },
+          {
+            kn:'ಆಶ್ಚರ್ಯ – ಅಚ್ಚರಿ',
+            tr:'Āścarya – Accari',
+            en:'Surprise / Wonder'
+          },
+          {
+            kn:'ಮೌನ – ಮಾತನಾಡದೆ ಇರುವುದು',
+            tr:'Mauna – Māṭanāḍade iruvudu',
+            en:'Silence / Not speaking'
+          },
+        ]
+      },
+
+      /* ─────────────────────────────────────
+         II.  ಒಂದು ವಾಕ್ಯದಲ್ಲಿ ಉತ್ತರಿಸಿ
+      ───────────────────────────────────── */
+      {
+        type:'qa', iconClass:'ic-short', icon:'🗒️',
+        titleKn:'ಒಂದು ವಾಕ್ಯದಲ್ಲಿ ಉತ್ತರಿಸಿ', titleEn:'Answer in One Sentence',
+        items:[
+          {
+            qKn:'ಗುರುಗಳು ಎಲ್ಲಿಗೆ ಬಂದರು?',
+            qTr:'Gurugaḷu ellige bandaru?',
+            qEn:'Where did the teacher come?',
+            aKn:'ಗುರುಗಳು ತರಗತಿಗೆ ಬಂದರು.',
+            aTr:'Gurugaḷu taragatige bandaru.',
+            aEn:'The teacher came to the class.'
+          },
+          {
+            qKn:'ಹುಡುಗನಿಗೆ ಯಾವ ಸಾಲಿನಲ್ಲಿ ಕುಳಿತುಕೊಳ್ಳಲು ಹೇಳಿದರು?',
+            qTr:'Huḍuganige yāva sālinalli kuḷithukoḷḷalu hēḷidaru?',
+            qEn:'Which row was the boy told to sit in?',
+            aKn:'ಹುಡುಗನಿಗೆ ಮೊದಲನೇ ಸಾಲಿನಲ್ಲಿ ಕುಳಿತುಕೊಳ್ಳಲು ಹೇಳಿದರು.',
+            aTr:'Huḍuganige modalanē sālinalli kuḷithukoḷḷalu hēḷidaru.',
+            aEn:'The boy was told to sit in the first row.'
+          },
+          {
+            qKn:'ಬಾಲಕನಿಗೆ ಏನು ಹೇಳಲು ಮನಸ್ಸು ಬರಲಿಲ್ಲ?',
+            qTr:'Bālakanige ēnu hēḷalu manassu baralilla?',
+            qEn:'What did the boy not feel like saying?',
+            aKn:'ಬಾಲಕನಿಗೆ ಸುಳ್ಳು ಹೇಳಲು ಮನಸ್ಸು ಬರಲಿಲ್ಲ.',
+            aTr:'Bālakanige suḷḷu hēḷalu manassu baralilla.',
+            aEn:'The boy did not feel like telling a lie.'
+          },
+          {
+            qKn:'ಸತ್ಯವಂತ ಬಾಲಕನ ಹೆಸರೇನು?',
+            qTr:'Satyavanta bālakana hesarēnu?',
+            qEn:"What is the truthful boy's name?",
+            aKn:'ಸತ್ಯವಂತ ಬಾಲಕನ ಹೆಸರು ಗೋಪಾಲಕೃಷ್ಣ.',
+            aTr:'Satyavanta bālakana hesaru Gōpālakṛṣṇa.',
+            aEn:"The truthful boy's name is Gopalakrishna."
+          },
+        ]
+      },
+
+      /* ─────────────────────────────────────
+         III.  ವಿವರವಾಗಿ ಉತ್ತರಿಸಿ
+      ───────────────────────────────────── */
+      {
+        type:'qa', iconClass:'ic-detail', icon:'📜',
+        titleKn:'ವಿವರವಾಗಿ ಉತ್ತರಿಸಿ', titleEn:'Answer in Detail',
+        items:[
+          {
+            qKn:'ಒಬ್ಬ ಬಾಲಕ ಎದ್ದು ನಿಂತು ಗುರುಗಳಿಗೆ ಏನೆಂದು ಹೇಳಿದನು?',
+            qTr:'Obba bālaka eddu nintu gurugaḷige ēnendu hēḷidanu?',
+            qEn:'What did one boy stand up and say to the teacher?',
+            aKn:'ಒಬ್ಬ ಬಾಲಕ ಎದ್ದು ನಿಂತು ಗುರುಗಳಿಗೆ ನಾನು ಲೆಕ್ಕಗಳನ್ನು ಮಾಡಿ ತಂದಿದ್ದೇನೆ ಎಂದು ಹೇಳಿದನು.',
+            aTr:'Obba bālaka eddu nintu gurugaḷige nānu lekkagaḷannu māḍi tandiddēne endu hēḷidanu.',
+            aEn:'One boy stood up and told the teacher, I have done the sums and brought them.'
+          },
+          {
+            qKn:'ಗುರುಗಳಿಗೆ ಅಚ್ಚರಿ ಮತ್ತು ಆನಂದ ಏಕಾಯಿತು?',
+            qTr:'Gurugaḷige accari mattu ānanda ēkāyitu?',
+            qEn:'Why was the teacher surprised and happy?',
+            aKn:'ಗುರುಗಳಿಗೆ ಬಾಲಕನ ಪ್ರಾಮಾಣಿಕತೆ ಕಂಡು ಅಚ್ಚರಿ ಮತ್ತು ಆನಂದ ವಾಯಿತು.',
+            aTr:'Gurugaḷige bālakana prāmāṇikate kaṇḍu accari mattu ānanda vāyitu.',
+            aEn:"The teacher was surprised and happy on seeing the boy's honesty."
+          },
+        ]
+      },
+
+      /* ─────────────────────────────────────
+         IV.  ಬಿಟ್ಟ ಸ್ಥಳ ತುಂಬಿರಿ
+      ───────────────────────────────────── */
+      {
+        type:'fill', iconClass:'ic-fill', icon:'✏️',
+        titleKn:'ಬಿಟ್ಟ ಸ್ಥಳ ತುಂಬಿರಿ', titleEn:'Fill in the Blanks',
+        items:[
+          {
+            sentenceKn: 'ಭೀಷ್ಮ ನೀನು <u>ಜಾಣ</u>.',
+            speakKn:    'ಭೀಷ್ಮ ನೀನು ಜಾಣ.',
+            tr: 'Bhīṣma nīnu jāṇa.',
+            en: 'Bhishma, you are smart.'
+          },
+          {
+            sentenceKn: 'ಅವನು ಒಂದು <u>ಹೆಜ್ಜೆ</u>ಯನ್ನು ಮುಂದೆ ಇಡಲಿಲ್ಲ.',
+            speakKn:    'ಅವನು ಒಂದು ಹೆಜ್ಜೆಯನ್ನು ಮುಂದೆ ಇಡಲಿಲ್ಲ.',
+            tr: 'Avanu ondu hejjeyannu munde iḍalilla.',
+            en: 'He did not take a single step forward.'
+          },
+          {
+            sentenceKn: 'ಇವರು ಮಹಿಳೆಯರಿಗೂ <u>ಶಿಕ್ಷಣ</u> ಬೇಕೆಂದು ಹೇಳಿದನು.',
+            speakKn:    'ಇವರು ಮಹಿಳೆಯರಿಗೂ ಶಿಕ್ಷಣ ಬೇಕೆಂದು ಹೇಳಿದನು.',
+            tr: 'Ivaru mahiḷeyarigū śikṣaṇa bēkendu hēḷidanu.',
+            en: 'He said that women too need education.'
+          },
+        ]
+      },
+
+      /* ─────────────────────────────────────
+         V.  ಆವರಣದಲ್ಲಿರುವ ಅಕ್ಷರ ಬಳಸಿ ಸೂಕ್ತ ಪದ ರಚಿಸಿ
+      ───────────────────────────────────── */
+      {
+        type:'wordform', iconClass:'ic-form', icon:'🔤',
+        titleKn:'ಆವರಣದಲ್ಲಿರುವ ಅಕ್ಷರ ಬಳಸಿ ಸೂಕ್ತ ಪದ ರಚಿಸಿ', titleEn:'Form the Correct Word',
+        items:[
+          {
+            displayKn:'ಅ<hl>ಭಿ</hl>ಮಾನ',
+            speakKn:  'ಅಭಿಮಾನ',
+            tr:'Abhimāna',
+            en:'Pride / Affection'
+          },
+          {
+            displayKn:'<hl>ಪ್ರಾ</hl>ಮಾಣಿಕತೆ',
+            speakKn:  'ಪ್ರಾಮಾಣಿಕತೆ',
+            tr:'Prāmāṇikate',
+            en:'Honesty / Integrity'
+          },
+          {
+            displayKn:'ಹರ<hl>ಸು</hl>',
+            speakKn:  'ಹರಸು',
+            tr:'Harasu',
+            en:'To Bless'
+          },
+          {
+            displayKn:'ಸತ್ಯ<hl>ವಂ</hl>ತ',
+            speakKn:  'ಸತ್ಯವಂತ',
+            tr:'Satyavanta',
+            en:'Truthful'
+          },
+        ]
+      },
+
+    ] // end sections
+  }, // end ch1
+
+  /* ══════════════════════════════════════════════
+     ADD MORE CHAPTERS BELOW THIS LINE
+     ──────────────────────────────────────────────
+     Copy this template and fill in your data:
+
+  {
+    id: 'ch2',
+    number: 'Chapter 2',
+    titleKannada: '…',
+    titleEnglish: '…',
+    sections: [
+      {
+        type:'vocab', iconClass:'ic-vocab', icon:'📝',
+        titleKn:'ಪದಗಳ ಅರ್ಥ', titleEn:'Word Meanings',
+        items:[
+          { kn:'…', tr:'…', en:'…' },
+        ]
+      },
+      {
+        type:'qa', iconClass:'ic-short', icon:'🗒️',
+        titleKn:'ಒಂದು ವಾಕ್ಯದಲ್ಲಿ ಉತ್ತರಿಸಿ', titleEn:'Answer in One Sentence',
+        items:[
+          { qKn:'…', qTr:'…', qEn:'…', aKn:'…', aTr:'…', aEn:'…' },
+        ]
+      },
+      {
+        type:'fill', iconClass:'ic-fill', icon:'✏️',
+        titleKn:'ಬಿಟ್ಟ ಸ್ಥಳ ತುಂಬಿರಿ', titleEn:'Fill in the Blanks',
+        items:[
+          { sentenceKn:'… <u>answer</u> …', speakKn:'… answer …', tr:'…', en:'…' },
+        ]
+      },
+      {
+        type:'wordform', iconClass:'ic-form', icon:'🔤',
+        titleKn:'ಆವರಣದಲ್ಲಿರುವ ಅಕ್ಷರ ಬಳಸಿ ಸೂಕ್ತ ಪದ ರಚಿಸಿ', titleEn:'Form the Correct Word',
+        items:[
+          { displayKn:'ಪದ<hl>ಅಕ್ಷರ</hl>', speakKn:'ಪದ', tr:'…', en:'…' },
+        ]
+      },
+    ]
+  },
+
+     ══════════════════════════════════════════════ */
+];
+
+
+/* ══════════════════════════════════════════════════════
+   RENDER ENGINE
+══════════════════════════════════════════════════════ */
+let activeId = CHAPTERS[0].id;
+const REFS   = {};  // domId → speakText
+let   refN   = 0;
+const mkRef  = t => { const id='r'+(refN++); REFS[id]=t; return id; };
+
+function renderTabs() {
+  document.getElementById('chapterTabs').innerHTML =
+    CHAPTERS.map(ch =>
+      `<button class="ch-tab${ch.id===activeId?' active':''}"
+               onclick="switchChapter('${ch.id}')">
+         ${ch.number}
+       </button>`
+    ).join('');
+}
+
+function switchChapter(id) {
+  stopAudio();
+  activeId = id;
+  renderTabs();
+  renderContent();
+}
+
+function renderContent() {
+  const ch = CHAPTERS.find(c => c.id === activeId);
+  const el = document.getElementById('chapterContent');
+  if (!ch) { el.innerHTML=''; return; }
+
+  el.innerHTML =
+    `<div class="ch-header">
+       <div class="ch-num">${ch.number}</div>
+       <div class="ch-title-kn">${ch.titleKannada}</div>
+       <div class="ch-title-en">${ch.titleEnglish}</div>
+     </div>` +
+    ch.sections.map((s,i) => renderSection(s,i)).join('');
+
+  // open first section by default
+  const fh = el.querySelector('.sec-hdr');
+  if (fh) toggle(fh);
+}
+
+function renderSection(s, idx) {
+  let body = '';
+  if      (s.type==='vocab')    body = renderVocab(s.items);
+  else if (s.type==='qa')       body = renderQA(s.items);
+  else if (s.type==='fill')     body = renderFill(s.items);
+  else if (s.type==='wordform') body = renderWordForm(s.items);
+
+  return `
+  <div class="sec-card" style="animation-delay:${idx*.07}s">
+    <div class="sec-hdr" onclick="toggle(this)">
+      <div class="sec-icon ${s.iconClass}">${s.icon}</div>
+      <div class="sec-titles">
+        <div class="sec-title-kn">${s.titleKn}</div>
+        <div class="sec-title-en">${s.titleEn}</div>
+      </div>
+      <div class="sec-count">${s.items.length} items</div>
+      <div class="sec-chevron">▼</div>
+    </div>
+    <div class="sec-body">${body}</div>
+  </div>`;
+}
+
+function toggle(hdr) {
+  hdr.classList.toggle('open');
+  hdr.nextElementSibling.classList.toggle('open');
+}
+
+/* ── Vocab ── */
+function renderVocab(items) {
+  return `<div class="vocab-grid">${items.map((it,i) => {
+    const r = mkRef(it.kn);
+    return `
+    <div class="vocab-card" id="${r}_c">
+      <div class="vocab-top">
+        <div class="vocab-num">Word ${i+1}</div>
+        <button class="speak-btn" id="${r}_b" onclick="go('${r}')">🔊 Speak</button>
+      </div>
+      <div class="vocab-kn">${it.kn}</div>
+      <div class="vocab-tr">${it.tr}</div>
+      <span class="vocab-en">${it.en}</span>
+    </div>`;
+  }).join('')}</div>`;
+}
+
+/* ── Q & A ── */
+function renderQA(items) {
+  return items.map((it,i) => {
+    const q = mkRef(it.qKn);
+    const a = mkRef(it.aKn);
+    return `
+    <div class="qa-item" id="${q}_c">
+      <div class="qa-q-block">
+        <div class="qa-q-top">
+          <div class="qa-q-label">Question ${i+1}</div>
+          <button class="speak-btn" id="${q}_b" onclick="go('${q}')">🔊 Speak Q</button>
+        </div>
+        <div class="qa-kn">${it.qKn}</div>
+        <div class="qa-tr">${it.qTr}</div>
+        <div class="qa-en">🔵 ${it.qEn}</div>
+      </div>
+      <div class="qa-a-block">
+        <div class="qa-a-top">
+          <div class="qa-a-label">✅ Answer</div>
+          <button class="speak-btn" id="${a}_b" onclick="go('${a}')">🔊 Speak A</button>
+        </div>
+        <div class="qa-ans-kn">${it.aKn}</div>
+        <div class="qa-ans-tr">${it.aTr}</div>
+        <div class="qa-ans-en">${it.aEn}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+/* ── Fill ── */
+function renderFill(items) {
+  return `<ul class="fill-list">${items.map((it,i) => {
+    const r = mkRef(it.speakKn);
+    return `
+    <li class="fill-item" id="${r}_c">
+      <div class="fill-num">${i+1}</div>
+      <div class="fill-body">
+        <div class="fill-top">
+          <div class="fill-kn">${it.sentenceKn}</div>
+          <button class="speak-btn" id="${r}_b" onclick="go('${r}')">🔊 Speak</button>
+        </div>
+        <div class="fill-tr">${it.tr}</div>
+        <div class="fill-en">${it.en}</div>
+      </div>
+    </li>`;
+  }).join('')}</ul>`;
+}
+
+/* ── Word Form ── */
+function renderWordForm(items) {
+  return `<div class="wf-grid">${items.map(it => {
+    const r    = mkRef(it.speakKn);
+    const disp = it.displayKn.replace(/<hl>(.*?)<\/hl>/g,
+                   '<span class="wf-hl">$1</span>');
+    return `
+    <div class="wf-card" id="${r}_c">
+      <button class="speak-btn wf-speak" id="${r}_b" onclick="go('${r}')">🔊</button>
+      <div class="wf-word">${disp}</div>
+      <div class="wf-tr">${it.tr}</div>
+      <span class="wf-mean">${it.en}</span>
+    </div>`;
+  }).join('')}</div>`;
+}
+
+/* ── Dispatcher ── */
+function go(r) {
+  const text = REFS[r];
+  const btn  = document.getElementById(r+'_b');
+  const card = document.getElementById(r+'_c');
+  if (text && btn) speakKannada(text, btn, card);
+}
+
+function showAddHint() {
+  alert(
+    'To add Chapter 2:\n\n' +
+    '1. Open this HTML file in any text editor\n' +
+    '2. Find the comment  "ADD MORE CHAPTERS BELOW THIS LINE"\n' +
+    '3. Copy the template block shown there and fill in your data\n' +
+    '4. Save the file — the new tab appears automatically!\n\n' +
+    'For GitHub Pages:\n' +
+    '  • Commit the updated file to your repo\n' +
+    '  • It will auto-deploy within ~60 seconds'
+  );
+}
+
+/* ── Boot ── */
+renderTabs();
+renderContent();
+</script>
+
+</body>
+</html>
