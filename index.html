@@ -398,6 +398,20 @@ RESPONSIVE
 ══════════════════════════ -->
 
 <div class="container">
+
+  <!-- DEBUG PANEL — tap to hide once everything works -->
+
+  <div id="debugPanel" style="
+      background:#1C0F07;color:#A0D0A0;font-family:monospace;font-size:.7rem;
+      border-radius:10px;padding:10px 14px;margin-bottom:16px;
+      border:1px solid rgba(42,157,92,.25);line-height:1.7;cursor:pointer;"
+       onclick="this.style.display='none'" title="Tap to hide">
+    <div style="color:rgba(245,166,35,.6);font-size:.65rem;margin-bottom:4px;">
+      🔍 Debug log — tap to hide &nbsp;|&nbsp; also open browser Console (F12) for full detail
+    </div>
+    <pre id="debugLog" style="margin:0;white-space:pre-wrap;word-break:break-all;">Waiting for first speak tap…</pre>
+  </div>
+
   <div class="chapter-nav">
     <span class="ch-nav-label">Chapters:</span>
     <div id="chapterTabs"></div>
@@ -413,6 +427,21 @@ RESPONSIVE
 const PROXY_URL = 'https://sarvam-proxy.achallakiran.workers.dev';
 
 /* ══════════════════════════════════════════════════════
+   DEBUG LOGGER  — shows last few events in a small panel
+══════════════════════════════════════════════════════ */
+const logs = [];
+function dbg(...args) {
+  const msg = args.map(a =>
+    typeof a === 'object' ? JSON.stringify(a) : String(a)
+  ).join(' ');
+  console.log('[KN]', msg);
+  logs.unshift(msg);
+  if (logs.length > 6) logs.pop();
+  const el = document.getElementById('debugLog');
+  if (el) el.textContent = logs.join('\n');
+}
+
+/* ══════════════════════════════════════════════════════
    SARVAM TTS ENGINE
 ══════════════════════════════════════════════════════ */
 let audioCache   = {};   // text → base64 wav
@@ -424,33 +453,84 @@ async function sarvamTTS(text) {
   const speaker = document.getElementById('speakerSel').value;
   const pace    = parseFloat(document.getElementById('paceRange').value);
 
-  const res = await fetch(PROXY_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      text,
-      target_language_code: 'kn-IN',
-      speaker,
-      model: 'bulbul:v3',
-      pace,
-      speech_sample_rate: 24000,
-    })
-  });
+  dbg('→ Fetching TTS for:', text.substring(0, 30));
+
+  let res;
+  try {
+    res = await fetch(PROXY_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        text,
+        target_language_code: 'kn-IN',
+        speaker,
+        model: 'bulbul:v3',
+        pace,
+        speech_sample_rate: 24000,
+      })
+    });
+  } catch(networkErr) {
+    dbg('✗ Network error:', networkErr.message);
+    throw new Error('Network error — check internet connection');
+  }
+
+  dbg('← HTTP status:', res.status);
+
+  // Read the raw text first so we can log it on failure
+  const rawText = await res.text();
+  dbg('← Raw response (first 120):', rawText.substring(0, 120));
 
   if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    throw new Error(err.error || `HTTP ${res.status}`);
+    // Try to parse error message from Sarvam's response
+    let errMsg = `HTTP ${res.status}`;
+    try {
+      const errJson = JSON.parse(rawText);
+      // Sarvam wraps errors in different shapes — handle all of them
+      errMsg = errJson.message
+            || errJson.error
+            || errJson.detail
+            || (typeof errJson === 'string' ? errJson : errMsg);
+      // Flatten object errors
+      if (typeof errMsg === 'object') errMsg = JSON.stringify(errMsg);
+    } catch(_) { /* rawText wasn't JSON, use status code */ }
+    throw new Error(errMsg);
   }
-  const data = await res.json();
-  if (!data.audios?.[0]) throw new Error('No audio in response');
+
+  let data;
+  try {
+    data = JSON.parse(rawText);
+  } catch(_) {
+    throw new Error('Response was not valid JSON');
+  }
+
+  if (!data.audios || !data.audios[0]) {
+    dbg('✗ No audios in response. Keys:', Object.keys(data).join(', '));
+    throw new Error('No audio returned — check Worker logs');
+  }
+
+  dbg('✓ Got audio, base64 length:', data.audios[0].length);
   return data.audios[0]; // base64 wav
 }
 
-function playBase64(b64) {
+async function playBase64(b64) {
   stopAudio();
-  const audio = new Audio('data:audio/wav;base64,' + b64);
+  // Decode base64 → Uint8Array → Blob → Object URL
+  // This avoids the data-URI size limit in some browsers
+  const binary = atob(b64);
+  const bytes  = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+  const blob = new Blob([bytes], { type: 'audio/wav' });
+  const url  = URL.createObjectURL(blob);
+  const audio = new Audio(url);
+  audio.onended = () => URL.revokeObjectURL(url);
   currentAudio = audio;
-  audio.play();
+  try {
+    await audio.play();
+  } catch(playErr) {
+    dbg('✗ audio.play() failed:', playErr.message);
+    URL.revokeObjectURL(url);
+    throw new Error('Browser blocked autoplay — tap the page first');
+  }
   return audio;
 }
 
@@ -488,14 +568,15 @@ async function speakKannada(text, btn, card) {
     btn.innerHTML = '🔊 Playing…';
     btn.disabled  = false;
 
-    const audio = playBase64(audioCache[text]);
+    const audio = await playBase64(audioCache[text]);
 
     audio.onended = () => { if (currentBtn === btn) stopAudio(); };
-    audio.onerror = () => {
+    audio.onerror = (e) => {
+      dbg('✗ Audio element error:', e);
       if (currentBtn === btn) {
         btn.classList.remove('playing');
         btn.classList.add('err');
-        btn.innerHTML = '⚠️ Error';
+        btn.innerHTML = '⚠️ Playback error';
         btn.disabled  = false;
         setTimeout(() => {
           btn.classList.remove('err');
@@ -507,16 +588,19 @@ async function speakKannada(text, btn, card) {
     };
 
   } catch(e) {
+    dbg('✗ speakKannada caught:', e.message);
     btn.classList.remove('loading');
     btn.classList.add('err');
-    btn.innerHTML = '⚠️ ' + (e.message.length < 28 ? e.message : 'API error');
+    // Show the actual message, truncated cleanly
+    const msg = e.message || 'Unknown error';
+    btn.innerHTML = '⚠️ ' + msg.substring(0, 30);
     btn.disabled  = false;
     if (card) card.classList.remove('card-active');
     currentBtn = null; currentCard = null;
     setTimeout(() => {
       btn.classList.remove('err');
       btn.innerHTML = '🔊 Speak';
-    }, 3000);
+    }, 4000);
   }
 }
 
