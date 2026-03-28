@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 1 — ಸತ್ಯವಂತ ಬಾಲಕ</title>
+<link rel="stylesheet" href="shared.css">
+</head>
+<body>
+
+<div class="stars-bg" id="starsBg"></div>
+<div class="celebration" id="celebration">
+  <div class="celebration-content">
+    <span class="celeb-emoji" id="celebEmoji">🌟</span>
+    <div class="celeb-title" id="celebTitle">Superstar!</div>
+    <div class="celeb-sub"   id="celebSub">You are learning so well!</div>
+    <div class="celeb-stars" id="celebStars">⭐⭐⭐</div>
+    <button class="celeb-btn" onclick="closeCelebration()">Keep Learning! 🚀</button>
+  </div>
+</div>
+
+<header class="app-header">
+  <div class="hdr-mascot">🦚</div>
+  <div class="hdr-text">
+    <div class="hdr-title">ಕನ್ನಡ Study Buddy</div>
+    <div class="hdr-sub">Class 2 · Chapter 1 · Sarvam Voice · <strong style="color:var(--sun)">v6.0</strong></div>
+  </div>
+  <div class="hdr-right">
+    <a class="back-btn" href="index.html">← All Chapters</a>
+    <div class="star-counter" onclick="showStarCelebration()" title="Your stars!">
+      <span>⭐</span><span id="starCount">0</span>
+    </div>
+  </div>
+</header>
+
+<!-- Settings bar -->
+<div class="settings-bar">
+  <span class="sbar-label">🎙 Voice:</span>
+
+  <div class="sbar-group">
+    <label>Model:</label>
+    <select class="sbar-select" id="modelSel" onchange="syncSpeakerDropdown()">
+      <option value="bulbul:v3" selected>Bulbul v3 (Best)</option>
+      <option value="bulbul:v2">Bulbul v2 (Save 50%)</option>
+    </select>
+    <span class="cost-badge cost-v3" id="costBadge">₹30/10K chars</span>
+  </div>
+
+  <div class="sbar-group">
+    <label>Speaker:</label>
+    <select class="sbar-select" id="speakerSel"></select>
+  </div>
+
+  <div class="sbar-group">
+    <label>Pace:</label>
+    <input type="range" class="sbar-range" id="paceRange"
+           min="0.5" max="1.4" step="0.05" value="0.75"
+           oninput="document.getElementById('paceVal').textContent=
+                    parseFloat(this.value).toFixed(2)+'×'">
+    <span class="sbar-val" id="paceVal">0.75×</span>
+  </div>
+
+  <div class="sbar-group">
+    <span id="cacheInfo">Loading…</span>
+    <button class="clear-btn" onclick="clearCache()">🗑 clear</button>
+  </div>
+
+  <button class="stop-btn" onclick="stopAudio()">⏹ Stop</button>
+</div>
+
+<div class="container">
+  <div id="chapterContent"></div>
+</div>
+
+<script src="shared.js"></script>
+<script>
+/* ── Chapter data ──────────────────────────────────────── */
+const CHAPTER = {
+  id: 'ch1',
+  number: 'Chapter 1',
+  emoji: '📖',
+  titleKannada: 'ಸತ್ಯವಂತ ಬಾಲಕ',
+  titleEnglish: 'The Truthful Boy',
+  sections: [
+
+    /* I. Word Meanings */
+    {
+      type:'vocab', iconClass:'ic-vocab', icon:'📝',
+      titleKn:'ಪದಗಳ ಅರ್ಥ', titleEn:'Word Meanings',
+      items:[
+        { kn:'ಸುಳಿವು – ಗುರುತು',               tr:'Suḷivu – Gurutu',           en:'Hint / Identity' },
+        { kn:'ಸದ್ದು – ಶಬ್ದ',                   tr:'Saddu – Śabda',              en:'Sound' },
+        { kn:'ಪರಿಶೀಲಿಸು – ಪರೀಕ್ಷಿಸು',          tr:'Pariśīlisu – Parīkṣisu',    en:'Examine / Check' },
+        { kn:'ಆಶ್ಚರ್ಯ – ಅಚ್ಚರಿ',               tr:'Āścarya – Accari',          en:'Surprise / Wonder' },
+        { kn:'ಮೌನ – ಮಾತನಾಡದೆ ಇರುವುದು',         tr:'Mauna – Māṭanāḍade iruvudu', en:'Silence / Not speaking' },
+      ]
+    },
+
+    /* II. One Sentence Answers */
+    {
+      type:'qa', iconClass:'ic-short', icon:'🗒️',
+      titleKn:'ಒಂದು ವಾಕ್ಯದಲ್ಲಿ ಉತ್ತರಿಸಿ', titleEn:'Answer in One Sentence',
+      items:[
+        {
+          qKn:'ಗುರುಗಳು ಎಲ್ಲಿಗೆ ಬಂದರು?',
+          qTr:'Gurugaḷu ellige bandaru?', qEn:'Where did the teacher come?',
+          aKn:'ಗುರುಗಳು ತರಗತಿಗೆ ಬಂದರು.',
+          aTr:'Gurugaḷu taragatige bandaru.', aEn:'The teacher came to the class.'
+        },
+        {
+          qKn:'ಹುಡುಗನಿಗೆ ಯಾವ ಸಾಲಿನಲ್ಲಿ ಕುಳಿತುಕೊಳ್ಳಲು ಹೇಳಿದರು?',
+          qTr:'Huḍuganige yāva sālinalli kuḷithukoḷḷalu hēḷidaru?',
+          qEn:'Which row was the boy told to sit in?',
+          aKn:'ಹುಡುಗನಿಗೆ ಮೊದಲನೇ ಸಾಲಿನಲ್ಲಿ ಕುಳಿತುಕೊಳ್ಳಲು ಹೇಳಿದರು.',
+          aTr:'Huḍuganige modalanē sālinalli kuḷithukoḷḷalu hēḷidaru.',
+          aEn:'The boy was told to sit in the first row.'
+        },
+        {
+          qKn:'ಬಾಲಕನಿಗೆ ಏನು ಹೇಳಲು ಮನಸ್ಸು ಬರಲಿಲ್ಲ?',
+          qTr:'Bālakanige ēnu hēḷalu manassu baralilla?',
+          qEn:'What did the boy not feel like saying?',
+          aKn:'ಬಾಲಕನಿಗೆ ಸುಳ್ಳು ಹೇಳಲು ಮನಸ್ಸು ಬರಲಿಲ್ಲ.',
+          aTr:'Bālakanige suḷḷu hēḷalu manassu baralilla.',
+          aEn:'The boy did not feel like telling a lie.'
+        },
+        {
+          qKn:'ಸತ್ಯವಂತ ಬಾಲಕನ ಹೆಸರೇನು?',
+          qTr:'Satyavanta bālakana hesarēnu?', qEn:"What is the truthful boy's name?",
+          aKn:'ಸತ್ಯವಂತ ಬಾಲಕನ ಹೆಸರು ಗೋಪಾಲಕೃಷ್ಣ.',
+          aTr:'Satyavanta bālakana hesaru Gōpālakṛṣṇa.',
+          aEn:"The truthful boy's name is Gopalakrishna."
+        },
+      ]
+    },
+
+    /* III. Detailed Answers */
+    {
+      type:'qa', iconClass:'ic-detail', icon:'📜',
+      titleKn:'ವಿವರವಾಗಿ ಉತ್ತರಿಸಿ', titleEn:'Answer in Detail',
+      items:[
+        {
+          qKn:'ಒಬ್ಬ ಬಾಲಕ ಎದ್ದು ನಿಂತು ಗುರುಗಳಿಗೆ ಏನೆಂದು ಹೇಳಿದನು?',
+          qTr:'Obba bālaka eddu nintu gurugaḷige ēnendu hēḷidanu?',
+          qEn:'What did one boy stand up and say to the teacher?',
+          aKn:'ಒಬ್ಬ ಬಾಲಕ ಎದ್ದು ನಿಂತು ಗುರುಗಳಿಗೆ ನಾನು ಲೆಕ್ಕಗಳನ್ನು ಮಾಡಿ ತಂದಿದ್ದೇನೆ ಎಂದು ಹೇಳಿದನು.',
+          aTr:'Obba bālaka eddu nintu gurugaḷige nānu lekkagaḷannu māḍi tandiddēne endu hēḷidanu.',
+          aEn:'One boy stood up and told the teacher, I have done the sums and brought them.'
+        },
+        {
+          qKn:'ಗುರುಗಳಿಗೆ ಅಚ್ಚರಿ ಮತ್ತು ಆನಂದ ಏಕಾಯಿತು?',
+          qTr:'Gurugaḷige accari mattu ānanda ēkāyitu?',
+          qEn:'Why was the teacher surprised and happy?',
+          aKn:'ಗುರುಗಳಿಗೆ ಬಾಲಕನ ಪ್ರಾಮಾಣಿಕತೆ ಕಂಡು ಅಚ್ಚರಿ ಮತ್ತು ಆನಂದ ವಾಯಿತು.',
+          aTr:'Gurugaḷige bālakana prāmāṇikate kaṇḍu accari mattu ānanda vāyitu.',
+          aEn:"The teacher was surprised and happy on seeing the boy's honesty."
+        },
+      ]
+    },
+
+    /* IV. Fill in Blanks */
+    {
+      type:'fill', iconClass:'ic-fill', icon:'✏️',
+      titleKn:'ಬಿಟ್ಟ ಸ್ಥಳ ತುಂಬಿರಿ', titleEn:'Fill in the Blanks',
+      items:[
+        { sentenceKn:'ಭೀಷ್ಮ ನೀನು <u>ಜಾಣ</u>.', speakKn:'ಭೀಷ್ಮ ನೀನು ಜಾಣ.', tr:'Bhīṣma nīnu jāṇa.', en:'Bhishma, you are smart.' },
+        { sentenceKn:'ಅವನು ಒಂದು <u>ಹೆಜ್ಜೆ</u>ಯನ್ನು ಮುಂದೆ ಇಡಲಿಲ್ಲ.', speakKn:'ಅವನು ಒಂದು ಹೆಜ್ಜೆಯನ್ನು ಮುಂದೆ ಇಡಲಿಲ್ಲ.', tr:'Avanu ondu hejjeyannu munde iḍalilla.', en:'He did not take a single step forward.' },
+        { sentenceKn:'ಇವರು ಮಹಿಳೆಯರಿಗೂ <u>ಶಿಕ್ಷಣ</u> ಬೇಕೆಂದು ಹೇಳಿದನು.', speakKn:'ಇವರು ಮಹಿಳೆಯರಿಗೂ ಶಿಕ್ಷಣ ಬೇಕೆಂದು ಹೇಳಿದನು.', tr:'Ivaru mahiḷeyarigū śikṣaṇa bēkendu hēḷidanu.', en:'He said that women too need education.' },
+      ]
+    },
+
+    /* V. Form the Word */
+    {
+      type:'wordform', iconClass:'ic-form', icon:'🔤',
+      titleKn:'ಆವರಣದಲ್ಲಿರುವ ಅಕ್ಷರ ಬಳಸಿ ಸೂಕ್ತ ಪದ ರಚಿಸಿ', titleEn:'Form the Correct Word',
+      items:[
+        { displayKn:'ಅ<hl>ಭಿ</hl>ಮಾನ',         speakKn:'ಅಭಿಮಾನ',       tr:'Abhimāna',    en:'Pride / Affection' },
+        { displayKn:'<hl>ಪ್ರಾ</hl>ಮಾಣಿಕತೆ',     speakKn:'ಪ್ರಾಮಾಣಿಕತೆ', tr:'Prāmāṇikate', en:'Honesty' },
+        { displayKn:'ಹರ<hl>ಸು</hl>',            speakKn:'ಹರಸು',         tr:'Harasu',      en:'To Bless' },
+        { displayKn:'ಸತ್ಯ<hl>ವಂ</hl>ತ',         speakKn:'ಸತ್ಯವಂತ',     tr:'Satyavanta',  en:'Truthful' },
+      ]
+    },
+  ]
+};
+
+/* ── Render ────────────────────────────────────────────── */
+const REFS = {};
+let   refN = 0;
+const mkRef = t => { const id='r'+(refN++); REFS[id]=t; return id; };
+
+function renderChapter() {
+  const ch    = CHAPTER;
+  const total = ch.sections.reduce((s,sec) => s+sec.items.length, 0);
+  document.getElementById('chapterContent').innerHTML =
+    `<div class="ch-hero">
+       <div class="ch-hero-emoji">${ch.emoji}</div>
+       <div class="ch-num">${ch.number}</div>
+       <div class="ch-kn">${ch.titleKannada}</div>
+       <div class="ch-en">${ch.titleEnglish}</div>
+       <div class="ch-progress">
+         <div class="ch-progress-bar"><div class="ch-progress-fill" id="progressFill" style="width:0%"></div></div>
+         <div class="ch-progress-label" id="progressLabel">0% heard today</div>
+       </div>
+     </div>` +
+    ch.sections.map((s,i) => renderSection(s,i)).join('');
+  const fh = document.querySelector('.sec-hdr');
+  if (fh) toggle(fh);
+}
+
+function renderSection(s, idx) {
+  let body='';
+  if      (s.type==='vocab')    body=renderVocab(s.items);
+  else if (s.type==='qa')       body=renderQA(s.items);
+  else if (s.type==='fill')     body=renderFill(s.items);
+  else if (s.type==='wordform') body=renderWordForm(s.items);
+  return `
+  <div class="sec-card" style="animation-delay:${idx*.08}s">
+    <div class="sec-hdr" onclick="toggle(this)">
+      <div class="sec-icon-wrap ${s.iconClass}">${s.icon}</div>
+      <div class="sec-titles"><div class="sec-title-kn">${s.titleKn}</div><div class="sec-title-en">${s.titleEn}</div></div>
+      <div class="sec-count">${s.items.length} items</div>
+      <div class="sec-chevron">▼</div>
+    </div>
+    <div class="sec-body">${body}</div>
+  </div>`;
+}
+
+function toggle(hdr) { hdr.classList.toggle('open'); hdr.nextElementSibling.classList.toggle('open'); }
+
+function renderVocab(items) {
+  return `<div class="vocab-grid">${items.map((it,i)=>{
+    const r=mkRef(it.kn);
+    return `<div class="vocab-card" id="${r}_c">
+      <div class="vocab-top"><div class="vocab-num">Word ${i+1}</div><button class="speak-btn" id="${r}_b" onclick="go('${r}',event)">🔊 Speak</button></div>
+      <div class="vocab-kn">${it.kn}</div><div class="vocab-tr">${it.tr}</div><span class="vocab-en">${it.en}</span>
+    </div>`;
+  }).join('')}</div>`;
+}
+
+function renderQA(items) {
+  return items.map((it,i)=>{
+    const q=mkRef(it.qKn), a=mkRef(it.aKn);
+    return `<div class="qa-item" id="${q}_c">
+      <div class="qa-q-block"><div class="qa-q-top"><div class="qa-q-label">❓ Q${i+1}</div><button class="speak-btn" id="${q}_b" onclick="go('${q}',event)">🔊 Q</button></div>
+        <div class="qa-kn">${it.qKn}</div><div class="qa-tr">${it.qTr}</div><div class="qa-en">🔵 ${it.qEn}</div></div>
+      <div class="qa-a-block"><div class="qa-a-top"><div class="qa-a-label">✅ Answer</div><button class="speak-btn" id="${a}_b" onclick="go('${a}',event)">🔊 A</button></div>
+        <div class="qa-ans-kn">${it.aKn}</div><div class="qa-ans-tr">${it.aTr}</div><div class="qa-ans-en">🟢 ${it.aEn}</div></div>
+    </div>`;
+  }).join('');
+}
+
+function renderFill(items) {
+  return `<ul class="fill-list">${items.map((it,i)=>{
+    const r=mkRef(it.speakKn);
+    return `<li class="fill-item" id="${r}_c"><div class="fill-num">${i+1}</div><div class="fill-body">
+      <div class="fill-top"><div class="fill-kn">${it.sentenceKn}</div><button class="speak-btn" id="${r}_b" onclick="go('${r}',event)">🔊 Speak</button></div>
+      <div class="fill-tr">${it.tr}</div><div class="fill-en">${it.en}</div></div></li>`;
+  }).join('')}</ul>`;
+}
+
+function renderWordForm(items) {
+  return `<div class="wf-grid">${items.map(it=>{
+    const r=mkRef(it.speakKn);
+    const disp=it.displayKn.replace(/<hl>(.*?)<\/hl>/g,'<span class="wf-hl">$1</span>');
+    return `<div class="wf-card" id="${r}_c"><button class="speak-btn wf-speak" id="${r}_b" onclick="go('${r}',event)">🔊</button>
+      <div class="wf-word">${disp}</div><div class="wf-tr">${it.tr}</div><span class="wf-mean">${it.en}</span></div>`;
+  }).join('')}</div>`;
+}
+
+function go(r, evt) {
+  const text=REFS[r], btn=document.getElementById(r+'_b'), card=document.getElementById(r+'_c');
+  if (text && btn) {
+    markHeard(CHAPTER.id+':'+r);
+    const total=CHAPTER.sections.reduce((s,sec)=>s+sec.items.length,0);
+    updateProgress(CHAPTER.id, total);
+    speakKannada(text, btn, card, evt?.clientX, evt?.clientY);
+  }
+}
+
+// Floating stars
+(function(){
+  const bg=document.getElementById('starsBg');
+  const emojis=['⭐','🌟','✨','💫','🌸','🎯'];
+  for(let i=0;i<15;i++){
+    const s=document.createElement('div'); s.className='star-float';
+    s.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+    s.style.left=Math.random()*100+'vw';
+    s.style.animationDuration=(12+Math.random()*20)+'s';
+    s.style.animationDelay=(-Math.random()*20)+'s';
+    s.style.fontSize=(.8+Math.random()*.8)+'rem';
+    bg.appendChild(s);
+  }
+})();
+
+bootShared(() => {
+  syncSpeakerDropdown();
+  renderChapter();
+});
+</script>
+</body>
+</html>

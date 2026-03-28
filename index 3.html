@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ಕನ್ನಡ Study Buddy 🌟 Class 2</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+.home-hero {
+  background:linear-gradient(135deg,#1A237E 0%,#283593 60%,#1565C0 100%);
+  border-radius:var(--radius-xl); padding:36px 32px; margin-bottom:28px;
+  text-align:center; position:relative; overflow:hidden;
+  box-shadow:0 10px 40px rgba(26,35,126,.35);
+}
+.home-hero::before { content:''; position:absolute; inset:0; background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='30' cy='30' r='25' fill='none' stroke='rgba(255,255,255,0.04)' stroke-width='1.5'/%3E%3C/svg%3E") repeat; pointer-events:none; }
+.home-mascot { font-size:4rem; display:block; margin-bottom:12px; animation:bounce 2s ease-in-out infinite; }
+.home-title { font-family:'Baloo 2',cursive; font-size:clamp(1.6rem,5vw,2.4rem); font-weight:800; color:var(--sun); text-shadow:0 3px 12px rgba(0,0,0,.3); line-height:1.2; }
+.home-sub   { font-size:1rem; color:rgba(255,255,255,.7); margin-top:8px; font-weight:600; }
+.home-stats { display:flex; gap:16px; justify-content:center; margin-top:18px; flex-wrap:wrap; }
+.stat-pill  { background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.2); border-radius:20px; padding:6px 16px; font-size:.8rem; font-weight:700; color:rgba(255,255,255,.85); }
+
+.chapters-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:16px; margin-bottom:24px; }
+
+.chapter-card {
+  background:white; border-radius:var(--radius-xl);
+  overflow:hidden; box-shadow:0 4px 20px var(--shadow);
+  border:2px solid transparent; transition:all .25s;
+  text-decoration:none; display:block; cursor:pointer;
+}
+.chapter-card:hover { transform:translateY(-4px); box-shadow:0 10px 30px rgba(26,35,126,.18); border-color:rgba(79,195,247,.4); }
+.chapter-card-banner {
+  padding:24px 20px 20px;
+  position:relative; overflow:hidden;
+}
+.chapter-card-emoji { font-size:3.5rem; display:block; margin-bottom:10px; position:relative; z-index:1; }
+.chapter-card-num  { font-size:.68rem; font-weight:800; text-transform:uppercase; letter-spacing:.12em; opacity:.7; margin-bottom:4px; position:relative; z-index:1; }
+.chapter-card-title-kn { font-family:'Noto Sans Kannada',sans-serif; font-size:1.3rem; font-weight:700; line-height:1.3; position:relative; z-index:1; }
+.chapter-card-title-en { font-size:.85rem; opacity:.75; font-style:italic; margin-top:2px; position:relative; z-index:1; }
+.chapter-card-banner::after { content:''; position:absolute; right:-10px; bottom:-10px; width:80px; height:80px; border-radius:50%; opacity:.08; background:white; }
+
+.chapter-card-footer { padding:12px 20px; display:flex; align-items:center; justify-content:space-between; border-top:1px solid #F5F5F5; }
+.chapter-sections-count { font-size:.72rem; font-weight:700; color:#78909C; }
+.chapter-open-btn { background:linear-gradient(135deg,#1565C0,#1A237E); color:white; border:none; border-radius:20px; padding:5px 14px; font-size:.76rem; font-weight:800; cursor:pointer; font-family:'Nunito',sans-serif; transition:transform .2s; }
+.chapter-open-btn:hover { transform:scale(1.05); }
+
+/* chapter colours */
+.ch-color-1 { background:linear-gradient(135deg,#1565C0,#0D47A1); color:white; }
+.ch-color-2 { background:linear-gradient(135deg,#2E7D32,#1B5E20); color:white; }
+.ch-color-3 { background:linear-gradient(135deg,#6A1B9A,#4A148C); color:white; }
+.ch-color-4 { background:linear-gradient(135deg,#BF360C,#870000); color:white; }
+.ch-color-5 { background:linear-gradient(135deg,#00695C,#004D40); color:white; }
+
+.tips-card {
+  background:linear-gradient(135deg,#FFF8E1,#FFF3CD);
+  border-radius:var(--radius-lg); padding:20px 24px;
+  border:2px solid rgba(255,214,0,.3); margin-bottom:20px;
+}
+.tips-title { font-family:'Baloo 2',cursive; font-size:1.1rem; font-weight:800; color:#E65100; margin-bottom:12px; }
+.tips-list  { list-style:none; display:flex; flex-direction:column; gap:8px; }
+.tips-list li { display:flex; gap:10px; font-size:.84rem; color:#5D4037; font-weight:600; line-height:1.4; }
+.tips-list li::before { content:'✨'; flex-shrink:0; }
+</style>
+</head>
+<body>
+
+<div class="stars-bg" id="starsBg"></div>
+<div class="celebration" id="celebration">
+  <div class="celebration-content">
+    <span class="celeb-emoji" id="celebEmoji">🌟</span>
+    <div class="celeb-title" id="celebTitle">Superstar!</div>
+    <div class="celeb-sub"   id="celebSub">You are learning so well!</div>
+    <div class="celeb-stars" id="celebStars">⭐⭐⭐</div>
+    <button class="celeb-btn" onclick="closeCelebration()">Keep Learning! 🚀</button>
+  </div>
+</div>
+
+<header class="app-header">
+  <div class="hdr-mascot">🦚</div>
+  <div class="hdr-text">
+    <div class="hdr-title">ಕನ್ನಡ Study Buddy</div>
+    <div class="hdr-sub">Class 2 · All Chapters</div>
+  </div>
+  <div class="hdr-right">
+    <div class="version-badge">v6.0</div>
+    <div class="star-counter" onclick="showStarCelebration()" title="Your stars!">
+      <span>⭐</span><span id="starCount">0</span>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- Hero -->
+  <div class="home-hero">
+    <span class="home-mascot">📚</span>
+    <div class="home-title">ನನ್ನ ಕನ್ನಡ ಪಾಠ</div>
+    <div class="home-sub">My Kannada Lessons — Class 2</div>
+    <div class="home-stats">
+      <span class="stat-pill">🎯 2 Chapters</span>
+      <span class="stat-pill">🔊 Sarvam Voice</span>
+      <span class="stat-pill" id="homeStarStat">⭐ 0 Stars earned</span>
+      <span class="stat-pill" id="homeStorageStat">💾 Loading…</span>
+    </div>
+  </div>
+
+  <!-- Chapters Grid -->
+  <div class="chapters-grid" id="chaptersGrid"></div>
+
+  <!-- Tips -->
+  <div class="tips-card">
+    <div class="tips-title">💡 How to use this app</div>
+    <ul class="tips-list">
+      <li>Tap any chapter card to open it and start studying</li>
+      <li>Press 🔊 Speak on any Kannada word or sentence to hear it read aloud</li>
+      <li>Audio is saved on this device — no internet needed after the first play!</li>
+      <li>Earn ⭐ stars every 3 times you listen — collect as many as you can!</li>
+      <li>The progress bar shows how much of each chapter you have heard today</li>
+    </ul>
+  </div>
+
+</div>
+
+<script src="shared.js"></script>
+<script>
+const CHAPTER_INDEX = [
+  {
+    id: 'ch1',
+    number: 'Chapter 1',
+    emoji: '📖',
+    titleKn: 'ಸತ್ಯವಂತ ಬಾಲಕ',
+    titleEn: 'The Truthful Boy',
+    color: 'ch-color-1',
+    sections: 5,
+    file: 'chapter1.html',
+  },
+  {
+    id: 'ch2',
+    number: 'Chapter 2',
+    emoji: '🐒',
+    titleKn: 'ಮಂಗಗಳ ಉಪವಾಸ',
+    titleEn: "The Monkeys' Fast",
+    color: 'ch-color-2',
+    sections: 4,
+    file: 'chapter2.html',
+  },
+  /* ADD MORE CHAPTERS HERE:
+  {
+    id: 'ch3', number: 'Chapter 3', emoji: '🌸',
+    titleKn: '…', titleEn: '…',
+    color: 'ch-color-3', sections: 5, file: 'chapter3.html',
+  },
+  */
+];
+
+function renderChapters() {
+  const grid = document.getElementById('chaptersGrid');
+  grid.innerHTML = CHAPTER_INDEX.map(ch => `
+    <a class="chapter-card" href="${ch.file}">
+      <div class="chapter-card-banner ${ch.color}">
+        <span class="chapter-card-emoji">${ch.emoji}</span>
+        <div class="chapter-card-num">${ch.number}</div>
+        <div class="chapter-card-title-kn">${ch.titleKn}</div>
+        <div class="chapter-card-title-en">${ch.titleEn}</div>
+      </div>
+      <div class="chapter-card-footer">
+        <span class="chapter-sections-count">${ch.sections} sections</span>
+        <button class="chapter-open-btn">Open →</button>
+      </div>
+    </a>
+  `).join('');
+}
+
+// Floating stars
+(function() {
+  const bg = document.getElementById('starsBg');
+  const emojis = ['⭐','🌟','✨','💫','🌸','🎯','🏆'];
+  for (let i = 0; i < 18; i++) {
+    const s = document.createElement('div');
+    s.className = 'star-float';
+    s.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    s.style.left  = Math.random() * 100 + 'vw';
+    s.style.animationDuration = (12 + Math.random() * 20) + 's';
+    s.style.animationDelay   = (-Math.random() * 20) + 's';
+    s.style.fontSize = (.8 + Math.random() * .8) + 'rem';
+    bg.appendChild(s);
+  }
+})();
+
+renderChapters();
+
+bootShared(() => {
+  // Update home stats after IDB loads
+  document.getElementById('homeStarStat').textContent =
+    '⭐ ' + (parseInt(localStorage.getItem('kn_stars')||'0')) + ' Stars earned';
+  idbGetAll().then(records => {
+    const bytes = records.reduce((s,r) => s+(r.wavBytes?.byteLength||0), 0);
+    const mb    = (bytes/1024/1024).toFixed(1);
+    document.getElementById('homeStorageStat').textContent =
+      '💾 ' + records.length + ' clips · ' + mb + ' MB';
+  });
+});
+</script>
+</body>
+</html>

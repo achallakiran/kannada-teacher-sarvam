@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 2 — ಮಂಗಗಳ ಉಪವಾಸ</title>
+<link rel="stylesheet" href="shared.css">
+</head>
+<body>
+
+<div class="stars-bg" id="starsBg"></div>
+<div class="celebration" id="celebration">
+  <div class="celebration-content">
+    <span class="celeb-emoji" id="celebEmoji">🌟</span>
+    <div class="celeb-title" id="celebTitle">Superstar!</div>
+    <div class="celeb-sub"   id="celebSub">You are learning so well!</div>
+    <div class="celeb-stars" id="celebStars">⭐⭐⭐</div>
+    <button class="celeb-btn" onclick="closeCelebration()">Keep Learning! 🚀</button>
+  </div>
+</div>
+
+<header class="app-header">
+  <div class="hdr-mascot">🐒</div>
+  <div class="hdr-text">
+    <div class="hdr-title">ಕನ್ನಡ Study Buddy</div>
+    <div class="hdr-sub">Class 2 · Chapter 2 · Sarvam Voice · <strong style="color:var(--sun)">v6.0</strong></div>
+  </div>
+  <div class="hdr-right">
+    <a class="back-btn" href="index.html">← All Chapters</a>
+    <div class="star-counter" onclick="showStarCelebration()" title="Your stars!">
+      <span>⭐</span><span id="starCount">0</span>
+    </div>
+  </div>
+</header>
+
+<!-- Settings bar -->
+<div class="settings-bar">
+  <span class="sbar-label">🎙 Voice:</span>
+
+  <div class="sbar-group">
+    <label>Model:</label>
+    <select class="sbar-select" id="modelSel" onchange="syncSpeakerDropdown()">
+      <option value="bulbul:v3" selected>Bulbul v3 (Best)</option>
+      <option value="bulbul:v2">Bulbul v2 (Save 50%)</option>
+    </select>
+    <span class="cost-badge cost-v3" id="costBadge">₹30/10K chars</span>
+  </div>
+
+  <div class="sbar-group">
+    <label>Speaker:</label>
+    <select class="sbar-select" id="speakerSel"></select>
+  </div>
+
+  <div class="sbar-group">
+    <label>Pace:</label>
+    <input type="range" class="sbar-range" id="paceRange"
+           min="0.5" max="1.4" step="0.05" value="0.75"
+           oninput="document.getElementById('paceVal').textContent=
+                    parseFloat(this.value).toFixed(2)+'×'">
+    <span class="sbar-val" id="paceVal">0.75×</span>
+  </div>
+
+  <div class="sbar-group">
+    <span id="cacheInfo">Loading…</span>
+    <button class="clear-btn" onclick="clearCache()">🗑 clear</button>
+  </div>
+
+  <button class="stop-btn" onclick="stopAudio()">⏹ Stop</button>
+</div>
+
+<div class="container">
+  <div id="chapterContent"></div>
+</div>
+
+<script src="shared.js"></script>
+<script>
+/* ── Chapter 2 data — scanned from notebook ─────────────
+   Source: IMG_7968.jpeg (front) + IMG_7969.jpeg (back)
+   Chapter title: ಮಂಗಗಳ ಉಪವಾಸ  (The Monkeys' Fast)
+─────────────────────────────────────────────────────── */
+const CHAPTER = {
+  id: 'ch2',
+  number: 'Chapter 2',
+  emoji: '🐒',
+  titleKannada: 'ಮಂಗಗಳ ಉಪವಾಸ',
+  titleEnglish: "The Monkeys' Fast",
+  sections: [
+
+    /* ── I. ಪದಗಳ ಅರ್ಥ  (Word Meanings) ── */
+    {
+      type:'vocab', iconClass:'ic-vocab', icon:'📝',
+      titleKn:'ಪದಗಳ ಅರ್ಥ', titleEn:'Word Meanings',
+      items:[
+        {
+          kn:'ಪಕ್ಕ – ಹತ್ತಿರ',
+          // pakka = close / beside; hattira = near
+          tr:'Pakka – Hattira',
+          en:'Beside / Near'
+        },
+        {
+          kn:'ಉಪವಾಸ – ಏನನ್ನೂ ತಿನ್ನದೆ ಇರುವುದು',
+          // upavāsa = fasting; ēnannu tinnade iruvudu = not eating anything
+          tr:'Upavāsa – Ēnannu tinnade iruvudu',
+          en:'Fasting / Not eating anything'
+        },
+        {
+          kn:'ಚಿಗ – ಉಗಿಯುವುದು',
+          // chiga = to chew and spit; ugiyuvudu = to spit out
+          tr:'Chiga – Ugiyuvudu',
+          en:'To Chew / Spit out'
+        },
+        {
+          kn:'ನೂಲು – ಸಿಪ್ಪೆ ಬಿಡಿಸುವುದು',
+          // nūlu = to peel; sippe biḍisuvudu = to remove the skin/peel
+          tr:'Nūlu – Sippe biḍisuvudu',
+          en:'To Peel (remove skin)'
+        },
+        {
+          kn:'ಕಪಿ – ಮಂಗ, ಕೋತಿ',
+          // kapi = monkey; manga, kōti = monkey (synonyms)
+          tr:'Kapi – Manga, Kōti',
+          en:'Monkey'
+        },
+      ]
+    },
+
+    /* ── II. ಒಂದು ವಾಕ್ಯದಲ್ಲಿ ಉತ್ತರಿಸಿ ── */
+    {
+      type:'qa', iconClass:'ic-short', icon:'🗒️',
+      titleKn:'ಒಂದು ವಾಕ್ಯದಲ್ಲಿ ಉತ್ತರಿಸಿ', titleEn:'Answer in One Sentence',
+      items:[
+        {
+          qKn:'ಮಂಗಗಳು ಎಲ್ಲಿ ವಾಸಿಸುತ್ತಿದ್ದವು?',
+          // mangagaḷu = monkeys; elli = where; vāsisuttiddavu = were living
+          qTr:'Mangagaḷu elli vāsisuttiddavu?',
+          qEn:'Where were the monkeys living?',
+          aKn:'ಮಂಗಗಳು ಕಾಡಿನಲ್ಲಿ ವಾಸಿಸುತ್ತಿದ್ದವು.',
+          aTr:'Mangagaḷu kāḍinalli vāsisuttiddavu.',
+          aEn:'The monkeys were living in the forest.'
+        },
+        {
+          qKn:'ಮಂಗಗಳು ಯಾವ ತೋಟಕ್ಕೆ ಹೋದವು?',
+          // yāva = which; tōṭakke = to the garden; hōdavu = went
+          qTr:'Mangagaḷu yāva tōṭakke hōdavu?',
+          qEn:'Which garden did the monkeys go to?',
+          aKn:'ಮಂಗಗಳು ಬಾಳೆಯ ತೋಟಕ್ಕೆ ಹೋದವು.',
+          aTr:'Mangagaḷu bāḷeya tōṭakke hōdavu.',
+          aEn:'The monkeys went to the banana garden.'
+        },
+        {
+          qKn:'ಮಂಗಗಳು ಹಣ್ಣನ್ನು ಎಲ್ಲಿ ಇಟ್ಟುಕೊಂಡವು?',
+          // haṇṇannu = the fruit; elli = where; iṭṭukoṇḍavu = kept/put
+          qTr:'Mangagaḷu haṇṇannu elli iṭṭukoṇḍavu?',
+          qEn:'Where did the monkeys keep the fruit?',
+          aKn:'ಮಂಗಗಳು ಹಣ್ಣನ್ನು ಬಾಯಲ್ಲಿ ಇಟ್ಟುಕೊಂಡವು.',
+          aTr:'Mangagaḷu haṇṇannu bāyalli iṭṭukoṇḍavu.',
+          aEn:'The monkeys kept the fruit in their mouths.'
+        },
+      ]
+    },
+
+    /* ── III. ಬಿಟ್ಟ ಸ್ಥಳ ತುಂಬಿರಿ (Fill in the Blanks) ── */
+    {
+      type:'fill', iconClass:'ic-fill', icon:'✏️',
+      titleKn:'ಬಿಟ್ಟ ಸ್ಥಳ ತುಂಬಿರಿ', titleEn:'Fill in the Blanks',
+      items:[
+        {
+          sentenceKn:'ಮಂಗಗಳು ಒಟ್ಟಿಗೆ ಸೇರಿ <u>ಉಪವಾಸ</u> ಮಾಡಿದವು.',
+          speakKn:   'ಮಂಗಗಳು ಒಟ್ಟಿಗೆ ಸೇರಿ ಉಪವಾಸ ಮಾಡಿದವು.',
+          // mangagaḷu oṭṭige sēri = monkeys gathered together; upavāsa māḍidavu = observed a fast
+          tr: 'Mangagaḷu oṭṭige sēri upavāsa māḍidavu.',
+          en: 'The monkeys gathered together and observed a fast.'
+        },
+        {
+          sentenceKn:'ಏನನ್ನೂ ತಿನ್ನದೆ ಮಟ ಮಟ <u>ಮಧ್ಯಾಹ್ನ</u> ಸೋಡ್ತ ಇದ್ದರು ಮರದಲ್ಲಿ.',
+          speakKn:   'ಏನನ್ನೂ ತಿನ್ನದೆ ಮಟ ಮಟ ಮಧ್ಯಾಹ್ನ ಸೋಡ್ತ ಇದ್ದರು ಮರದಲ್ಲಿ.',
+          // ēnannu tinnade = without eating anything; maṭa maṭa madhyāhna = blazing noon; mara = tree
+          tr: 'Ēnannu tinnade maṭa maṭa madhyāhna sōḍta iddaru maradalli.',
+          en: 'Without eating anything they spent the blazing afternoon up in the tree.'
+        },
+        {
+          sentenceKn:'ಕ್ರಿಯಾಲೋತಕ ಬಾಯಲ್ಲಿ ಇಟ್ಟ <u>ಹಣ್ಣನ್ನು</u> ಇಳಿಸಿಕೊಂಡರು.',
+          speakKn:   'ಕ್ರಿಯಾಲೋತಕ ಬಾಯಲ್ಲಿ ಇಟ್ಟ ಹಣ್ಣನ್ನು ಇಳಿಸಿಕೊಂಡರು.',
+          // kriyālōtaka = finally / in the end; bāyalli iṭṭa = kept in mouth; haṇṇannu iḷisikoṇḍaru = swallowed the fruit
+          tr: 'Kriyālōtaka bāyalli iṭṭa haṇṇannu iḷisikoṇḍaru.',
+          en: 'Finally, they swallowed the fruit they had kept in their mouths.'
+        },
+      ]
+    },
+
+    /* ── IV. ಪದಗಳ ಅರ್ಥ ತುಂಬಿರಿ (Match/Fill Word Meanings) ── */
+    {
+      type:'wordform', iconClass:'ic-form', icon:'🔤',
+      titleKn:'ಸರಿಯಾದ ಪದ ರಚಿಸಿ', titleEn:'Form the Correct Word',
+      items:[
+        {
+          displayKn:'<hl>ಉಪ</hl>ವಾಸ',
+          speakKn:  'ಉಪವಾಸ',
+          // upavāsa = fasting — the key syllable being practised is ಉಪ
+          tr: 'Upavāsa',
+          en: 'Fasting'
+        },
+        {
+          displayKn:'ನಾಲ್ಗೆ <hl>ತಾರ</hl>ಡಿ',
+          speakKn:  'ನಾಲ್ಗೆ ತಾರಡಿ',
+          // nālge tāraḍi = tongue twisting / temptation — from notebook entry ②
+          tr: 'Nālge tāraḍi',
+          en: 'Tongue is tempted (craving)'
+        },
+        {
+          displayKn:'ಅನೆಯ <hl>ರಟ್ಟ</hl>ಕ',
+          speakKn:  'ಅನೆಯ ರಟ್ಟಕ',
+          // aneyarattaka — from notebook entry ③ meaning "stubborn / firm"
+          tr: 'Aneyarattaka',
+          en: 'Stubborn / Firm'
+        },
+        {
+          displayKn:'ಹಣ್ಣನ್ನು <hl>ಫಲ</hl>ದವ',
+          speakKn:  'ಹಣ್ಣನ್ನು ಫಲದವ',
+          // haṇṇannu phaladava = one who gives fruit — from notebook entry ④
+          tr: 'Haṇṇannu phaladava',
+          en: 'One who gives fruit'
+        },
+      ]
+    },
+
+  ]
+};
+
+/* ── Render (identical pattern to chapter1.html) ─────── */
+const REFS = {};
+let   refN = 0;
+const mkRef = t => { const id='r'+(refN++); REFS[id]=t; return id; };
+
+function renderChapter() {
+  const ch    = CHAPTER;
+  document.getElementById('chapterContent').innerHTML =
+    `<div class="ch-hero">
+       <div class="ch-hero-emoji">${ch.emoji}</div>
+       <div class="ch-num">${ch.number}</div>
+       <div class="ch-kn">${ch.titleKannada}</div>
+       <div class="ch-en">${ch.titleEnglish}</div>
+       <div class="ch-progress">
+         <div class="ch-progress-bar"><div class="ch-progress-fill" id="progressFill" style="width:0%"></div></div>
+         <div class="ch-progress-label" id="progressLabel">0% heard today</div>
+       </div>
+     </div>` +
+    ch.sections.map((s,i) => renderSection(s,i)).join('');
+  const fh = document.querySelector('.sec-hdr');
+  if (fh) toggle(fh);
+}
+
+function renderSection(s, idx) {
+  let body='';
+  if      (s.type==='vocab')    body=renderVocab(s.items);
+  else if (s.type==='qa')       body=renderQA(s.items);
+  else if (s.type==='fill')     body=renderFill(s.items);
+  else if (s.type==='wordform') body=renderWordForm(s.items);
+  return `
+  <div class="sec-card" style="animation-delay:${idx*.08}s">
+    <div class="sec-hdr" onclick="toggle(this)">
+      <div class="sec-icon-wrap ${s.iconClass}">${s.icon}</div>
+      <div class="sec-titles"><div class="sec-title-kn">${s.titleKn}</div><div class="sec-title-en">${s.titleEn}</div></div>
+      <div class="sec-count">${s.items.length} items</div>
+      <div class="sec-chevron">▼</div>
+    </div>
+    <div class="sec-body">${body}</div>
+  </div>`;
+}
+
+function toggle(hdr) { hdr.classList.toggle('open'); hdr.nextElementSibling.classList.toggle('open'); }
+
+function renderVocab(items) {
+  return `<div class="vocab-grid">${items.map((it,i)=>{
+    const r=mkRef(it.kn);
+    return `<div class="vocab-card" id="${r}_c">
+      <div class="vocab-top"><div class="vocab-num">Word ${i+1}</div><button class="speak-btn" id="${r}_b" onclick="go('${r}',event)">🔊 Speak</button></div>
+      <div class="vocab-kn">${it.kn}</div><div class="vocab-tr">${it.tr}</div><span class="vocab-en">${it.en}</span>
+    </div>`;
+  }).join('')}</div>`;
+}
+
+function renderQA(items) {
+  return items.map((it,i)=>{
+    const q=mkRef(it.qKn), a=mkRef(it.aKn);
+    return `<div class="qa-item" id="${q}_c">
+      <div class="qa-q-block"><div class="qa-q-top"><div class="qa-q-label">❓ Q${i+1}</div><button class="speak-btn" id="${q}_b" onclick="go('${q}',event)">🔊 Q</button></div>
+        <div class="qa-kn">${it.qKn}</div><div class="qa-tr">${it.qTr}</div><div class="qa-en">🔵 ${it.qEn}</div></div>
+      <div class="qa-a-block"><div class="qa-a-top"><div class="qa-a-label">✅ Answer</div><button class="speak-btn" id="${a}_b" onclick="go('${a}',event)">🔊 A</button></div>
+        <div class="qa-ans-kn">${it.aKn}</div><div class="qa-ans-tr">${it.aTr}</div><div class="qa-ans-en">🟢 ${it.aEn}</div></div>
+    </div>`;
+  }).join('');
+}
+
+function renderFill(items) {
+  return `<ul class="fill-list">${items.map((it,i)=>{
+    const r=mkRef(it.speakKn);
+    return `<li class="fill-item" id="${r}_c"><div class="fill-num">${i+1}</div><div class="fill-body">
+      <div class="fill-top"><div class="fill-kn">${it.sentenceKn}</div><button class="speak-btn" id="${r}_b" onclick="go('${r}',event)">🔊 Speak</button></div>
+      <div class="fill-tr">${it.tr}</div><div class="fill-en">${it.en}</div></div></li>`;
+  }).join('')}</ul>`;
+}
+
+function renderWordForm(items) {
+  return `<div class="wf-grid">${items.map(it=>{
+    const r=mkRef(it.speakKn);
+    const disp=it.displayKn.replace(/<hl>(.*?)<\/hl>/g,'<span class="wf-hl">$1</span>');
+    return `<div class="wf-card" id="${r}_c"><button class="speak-btn wf-speak" id="${r}_b" onclick="go('${r}',event)">🔊</button>
+      <div class="wf-word">${disp}</div><div class="wf-tr">${it.tr}</div><span class="wf-mean">${it.en}</span></div>`;
+  }).join('')}</div>`;
+}
+
+function go(r, evt) {
+  const text=REFS[r], btn=document.getElementById(r+'_b'), card=document.getElementById(r+'_c');
+  if (text && btn) {
+    markHeard(CHAPTER.id+':'+r);
+    const total=CHAPTER.sections.reduce((s,sec)=>s+sec.items.length,0);
+    updateProgress(CHAPTER.id, total);
+    speakKannada(text, btn, card, evt?.clientX, evt?.clientY);
+  }
+}
+
+(function(){
+  const bg=document.getElementById('starsBg');
+  const emojis=['⭐','🌟','✨','💫','🐒','🍌','🎯'];
+  for(let i=0;i<15;i++){
+    const s=document.createElement('div'); s.className='star-float';
+    s.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+    s.style.left=Math.random()*100+'vw';
+    s.style.animationDuration=(12+Math.random()*20)+'s';
+    s.style.animationDelay=(-Math.random()*20)+'s';
+    s.style.fontSize=(.8+Math.random()*.8)+'rem';
+    bg.appendChild(s);
+  }
+})();
+
+bootShared(() => {
+  syncSpeakerDropdown();
+  renderChapter();
+});
+</script>
+</body>
+</html>
